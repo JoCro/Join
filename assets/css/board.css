@@ -1,0 +1,390 @@
+@font-face {        
+    font-family: 'interregular';
+    src: url('/assets/fonts/inter/inter-v13-latin-regular.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: #f7f6f8;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+.render_board_mobile{
+    height: 100%; 
+    max-width: 396px;
+    padding-top: 70px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.placeholder-container-img{
+    height: 48px; 
+    width: 100%;
+    max-width: 246px;    
+}
+
+.board-titel-add-search{
+    padding-top: 128px;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 396px;
+}
+
+.addTaskOverlayContainer{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        backdrop-filter: brightness(0.4);
+        z-index: 200;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(1000%);
+        transition: all 120ms ease-in-out;
+}
+
+.addTaskOverlayContainerShowing{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    backdrop-filter: brightness(0.4);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(0);
+    transition: all 120ms ease-in-out;
+}
+
+.board-add-task-mobile{    
+    display: flex;
+    flex-direction: column;
+ }
+
+.board-add-button-desktop{
+    display: none;    
+}
+
+.board-add-task-mobile-button{
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 21px;
+    border: 0 !important;
+    line-height: 25.2px;
+    background-color: #2A3647;
+    color: white;
+    background-image: url(/assets/svg/add_white.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 12px);
+    background-size: 24px 24px;
+    box-sizing: border-box;
+    text-align: start;
+    display: flex;
+    align-items: center;      
+}
+
+.board-add-task-mobile-button:hover{
+    background-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border-radius: 10px;  
+}
+
+.board-add-button-desktop:hover {           
+    background-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border-radius: 10px;    
+}
+
+.board-add-task-title-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 48px;
+    padding-bottom: 40px;
+}
+
+.board-add-task-mobile-img {
+cursor: pointer;
+} 
+
+.board-add-task-mobile-img:hover{
+    background-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.board-add-task-desktop{
+    display: none;
+}
+
+.board-add-task-desktop:hover{
+    cursor: pointer;
+    background-color: #29ABE2;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid transparent;
+}
+
+.add-mobile-small-img{
+    cursor: pointer;    
+} 
+
+.add-mobile-small-img:hover{
+    opacity: 0.5;
+    content: url('/assets/svg/plus_button_mobile_blue.svg');
+}
+
+.board-search-mobile {
+    height: 48px;        
+    border: 1px solid #A8A8A8;
+    border-radius: 8px;
+    margin-bottom: 24px;    
+    background-color: #FFFFFF;
+}
+
+.board-container{
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+}
+
+.board-search-mobile-input{
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+#boardInput{
+    width: 100%;
+    border: none;
+    height: 44px;
+    font-size: 20px;
+    outline: none;
+}
+
+.board-search-icon-mobile{
+    width: 48px;
+    height: 32px;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid #D1D1D1;
+}
+
+.board-search-icon-mobile-img{ 
+    height: 17.58px;
+    width: 17.58px;
+}
+
+.noScroll{
+    overflow-y: hidden;
+}
+
+.closeOverlay-btn{
+    position: relative;
+    top: -120px;
+    left: 93%;
+    width: 24px;
+    height: 24px;
+    background-image: url("/assets/svg/Close_black.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.closeOverlay-btn:hover{
+    cursor: pointer;
+    border-radius: 100px;
+    background-color: #29ABE2;
+}
+
+.notificationDivShowing{
+    position: absolute;
+    top: 50vh;
+    left: calc(50% - 150px);
+    z-index: 201;
+    transform: translateY(0);
+    transition: all 120ms ease-in-out;
+}
+
+@media (min-width: 800px) {
+
+    .render_board_mobile{
+        padding-left: 296px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .board-titel-add-search{
+        padding-left: 296px;
+        padding-top: 128px;
+        padding-right: 16px;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .board-add-button-desktop{
+        display: block;
+        cursor: pointer;
+    }
+    
+    .board-add-task-desktop{
+        width: 160px;
+        height: 48px;
+        border-radius: 10px;
+        padding: 16px;
+        font-size: 21px;
+        border: 0 !important;
+        line-height: 25.2px;
+        font-weight: 700;
+        background-color: #2A3647;
+        color: white;
+        background-image: url(/assets/svg/add_white.svg);
+        background-repeat: no-repeat;
+        background-position: calc(100% - 16px);
+        background-size: 24px 24px;
+        box-sizing: border-box;
+        text-align: start;
+        display: flex;
+        align-items: center;
+        gap: 4px; 
+    }
+    
+    .board-search-mobile{
+        display: flex;
+        gap: 32px;
+        width: 504px;
+        margin-bottom: 0px;
+        border: none;
+        padding-right: 0px;
+        background-color: #F6F7F8
+    }
+    
+    #boardInput{
+        height: 38px;
+        margin-left: 16px;
+    }
+    
+    .board-search-mobile-input {
+        margin-left: 8px;
+        margin-right: 0px;
+        background-color: white;
+    }
+    
+    .board-search-mobile-input{
+        border: 1px solid #A8A8A8;
+        border-radius: 8px;
+        height: 48px;
+    }
+    
+    .board-container{    
+        padding-left: 296px;
+    }
+    
+    .container-class1{
+    display: flex;
+    }
+    
+    .container-class2{
+    display: flex;
+    padding-top: 24px;
+    }
+    
+    .in-progress-mobile{
+        padding-top: 0px;
+        padding-left: 24px;
+    }
+    
+    .await-feedback-container{
+        display: block; 
+        overflow-x: hidden; 
+        white-space: normal; 
+        scrollbar-width: none;    
+    }
+    
+    .await-feedback-cards-container {
+        padding-right: 0px;
+    }
+    
+    .await-feedback-mobile{
+        padding-top: 0px;
+        padding-left: 0px;
+    }
+    
+    .await-feedback-title-mobile{
+        padding-top: 0px;
+    }
+    
+    .done-mobile{
+        padding-top: 0px;
+        padding-left: 24px;
+    }
+    
+    .done-title-mobile {
+        padding-top: 0px;
+    }
+    
+    .board-add-mobile{
+        display: none;
+    }
+    }
+    
+@media(min-width: 1250px){
+
+    .all-content-div{
+        background-color: white;
+       width: 1100px !important;
+       height: 750px !important;
+       border-radius: 20px;
+       scrollbar-width: none !important;
+    }
+
+    .headline{
+        margin-left: 64px !important;
+        margin-top: 62px !important;
+        top: 0px !important;
+        background-color: white !important;
+        width: 400px !important;
+    }
+
+    .content-container{
+        margin-left: 64px !important;
+        margin-top: 30px !important;
+    }
+
+    .board-search-mobile{       /*insert by Andreas*/
+        padding-right: 88px;
+    }
+}
+
+@media (min-width: 1460px){
+
+.board-container {    
+    flex-direction: row;
+}
+
+.container-class2{
+    padding-left: 24px;
+    padding-top: 0px;
+}
+
+.edit-task-category-svg{
+    display: none;
+}
+}

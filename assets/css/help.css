@@ -1,0 +1,79 @@
+body {
+    text-wrap: balance;
+    background-color: rgb(246, 247, 248);
+}
+
+.helpHTML-h2 {
+    margin-bottom: 16px;
+}
+
+.text-container {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    margin-bottom: 24px;
+}
+
+.a-help {
+    margin: 0;
+    color: rgba(41, 171, 226, 1);
+    display: inline-block;
+    text-wrap: wrap;
+    overflow-wrap: break-word
+}
+
+.help-list {
+    margin-top: 16px;
+    padding-left: 22px;
+    line-height: 19.2px;
+}
+
+ol > li::marker {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+ol {
+    padding-bottom: 16px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.Imprint-ul {
+    margin-left: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+}
+
+.info-title-and-img {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-arrow-left {
+    width: 32px;
+    height: 32px;
+    transition: all 100ms ease-in-out;
+}
+
+.info-arrow-left:hover {
+    width: 36px;
+    height: 36px;
+    border-radius: 360px;
+    background-color: rgb(243, 243, 244);
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    .ml-mr-16px {
+        margin-right: 98px !important;
+    }
+}

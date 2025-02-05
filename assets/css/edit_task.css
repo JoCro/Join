@@ -1,0 +1,397 @@
+.close-edit{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.board-edit-task{
+    max-width: 396px;
+    height: fit-content;
+    z-index: 8;
+    background-color: white;
+    border-radius: 30px;
+    position: fixed;
+    top: 5%;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    padding: 32px 24px 32px 24px;
+    margin: 0 auto;
+    transition: all 120ms ease-in-out;
+    max-height: calc(100% - 18%);
+}
+
+.edit-title{
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 24px;
+}
+
+.edit-title-input{
+    color: black;
+    padding-left: 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #D1D1D1;
+}
+
+.edit-title-input::placeholder{
+    color: black;     
+    font-size: 16px; 
+}
+
+.edit-description{
+    width: 100%;
+    padding-bottom: 24px;
+    padding-top: 8px;
+}
+    
+.edit-description-input {
+    height: 120px;
+    width: 100%;
+    color: black;
+    padding: 16px; 
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box; 
+    resize: none; 
+    overflow-y: auto; 
+}
+
+.edit-description-input::placeholder {
+    color: black;
+    font-size: 16px;
+    text-align: left; 
+}
+
+.description-card-edit{
+    padding-bottom: 8px;
+}
+
+.date-input {
+    width: 100%;    height: 40px; 
+    padding: 8px 21px; 
+    border: 1px solid #D1D1D1; 
+    border-radius: 10px; 
+    outline: none;
+    background-color: white; 
+    background-image: url('/assets/svg/event.svg'); 
+    background-position: calc(100% - 18px) center; 
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    cursor: pointer; 
+}
+
+.date-input::placeholder {
+    color: black;
+}
+
+.date-input::-webkit-input-placeholder {
+    color: black;
+}
+
+.date-input::-moz-placeholder {
+    color: black;
+}
+
+.date-input:-ms-input-placeholder {
+    color: black;
+}
+
+.date-input:-moz-placeholder {
+    color: black;
+}
+
+.calendar-icon-label {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 24px;
+    padding-top: 8px;
+}
+
+#edit_input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; 
+    cursor: pointer; 
+}
+
+.nameListEdit {    
+    width: 100%;
+    height: 48px;
+    padding: 12px 16px;
+    gap: 0;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    justify-content: space-between;
+}
+
+.edit-priority-buttons-div{
+    display: flex;
+    align-items: center;
+    gap:16px;
+    height: 56px;
+    width: 100%;
+    padding-bottom: 24px;
+    padding-top: 8px;
+}
+
+.edit-priority-buttons{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 56px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+    outline: none; 
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.background-color-yellow{
+    background-color: #FFA800;
+    color: white;
+}
+
+.background-color-green{
+    background-color: #7ae229;
+    color: white;
+}
+
+.background-color-red{
+    background-color: #FF3D00;
+    color: white;
+}
+
+.edit-contact-list{
+    position: relative;
+    max-width: 396px;
+    width: 100%;
+}
+
+.contact-list-container {
+    width: 100%;
+    max-height: 200px;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    scrollbar-width: none;
+    border-radius: 8px;
+    z-index: 3;
+}
+
+.contactFieldEdit{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    background-color: white;
+}
+
+.profile_pic{    
+    padding-left: 8px;
+}
+
+.SearchContactEdit{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    border-radius: 10px;
+    align-items: center;
+    border: 1px solid #D1D1D1;
+    margin-top: 8px
+}
+
+.InputSearchEdit{
+   width: 100%;
+   outline: none;
+   border: none;
+   padding-left: 20px; 
+   border: none; 
+   font-size: 16px; 
+}
+
+.contact-list-edit-button{
+    padding-right: 16px;
+    padding-left: 16px;
+    cursor: pointer;
+}
+
+.edit-contact-name-svg{
+    display: flex;
+    align-items: center;
+    gap: 16px;   
+}
+
+.edit-contact-check{
+    padding-right: 8px;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    background-image: url('/assets/svg/rectangle.svg');
+}
+
+.checkbox.selected {
+    background-image: url('/assets/svg/checkboxWhite.svg');
+}
+
+.choosen-contacts{
+    display: flex;
+    width: 100%;
+    height: 56px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.background-blue {
+    background-color: #2A3647;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    border-radius: 10px;
+    margin-bottom: 2px;
+}
+
+.edit-task-subtask{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px ;
+    align-items: center;
+    height: 24px;
+}
+
+.edit-task-subtask:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.edit-task-subtask:hover .edit-subtask-buttons-2{
+    display: flex;
+}
+
+.edit-subtask {
+    width: 100%;
+    display: flex;
+    height: 48px;
+    max-width: 396px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin-top: 8px;
+}
+
+.edit-subtask-input {
+    width: 100%;
+    display: flex;
+    height: 48px;
+    max-width: 396px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    margin-bottom: 8px;
+    align-items: center;
+    background-color: white;
+    margin-top: 8px;
+}
+
+.subtask-edit-input{
+    width: 100%;
+    padding: 14.5px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-radius: 10px;  
+    height: 100%;  
+}
+
+.edit-subtask-add{
+    padding-right: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.edit-subtask-buttons-2{
+   cursor: pointer;
+   display: none;
+}
+
+.edit-subtask-buttons-img:hover{
+    opacity: 0.7;
+}
+
+.placeholder-div{
+    padding-left: 5px;
+    padding-right: 8px;    
+}
+
+.edit-render-subtasks{
+padding-top: 8px;
+}
+
+.edit-ok-button{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-top: 16px;
+}
+
+.edit-button{
+    width: 100px;
+    height: 56px;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 21px;
+    line-height: 25.2px;
+    font-weight: 700;
+    background-color: #2A3647;
+    color: white;
+    background-image: url(/assets/svg/check.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 16px);
+    background-size: 24px 24px;
+    box-sizing: border-box;
+    text-align: start;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.edit-button:hover{
+    background-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border-radius: 10px;  
+}
+
+.hiddenMenue{
+    display: none;
+}

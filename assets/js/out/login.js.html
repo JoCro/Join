@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>function showRegisterForm() {
+    document.getElementById('signupParentDiv').classList.remove('d-none');
+    document.getElementById('loginParentDiv').classList.add('d-none');
+} 
+
+function showLoginForm() {
+    document.getElementById('signupParentDiv').classList.add('d-none');
+    document.getElementById('loginParentDiv').classList.remove('d-none');
+}
+
+/**
+ * This function changes the image and the cursor depending on whether the input field is empty, 
+ * contains text or wants to make the written text visible, e.g. with a password.
+ * 
+ * @param {object} inputField - This is the input field in which the image and cursor would be changed.
+ */
+function changeInputFieldImg(inputField) {
+    let passwordValue = inputField.value
+    let inputIconDiv = inputField.nextElementSibling;
+    let inputFieldImg = inputIconDiv.querySelector("img");
+    if (passwordValue !== '') {
+        inputFieldImg.src = 'assets/svg/visibility_off.svg';
+        inputFieldImg.classList.add('cursor-pointer');
+        inputField.type = "password";
+    } else {
+        inputFieldImg.src = 'assets/svg/lock.svg';
+        inputFieldImg.classList.remove('cursor-pointer');
+    }
+}
+
+/**
+ * This function shows the user the password and changes the image in the input field.
+ * 
+ * @param {object} inputFieldImg - This is the image which would be changed.
+ */
+function showPassword(inputFieldImg) {
+    let inputField = inputFieldImg.parentNode.previousElementSibling;
+    if (inputFieldImg.src.includes('visibility_off.svg')) {
+      inputFieldImg.src = '/assets/svg/visibility.svg';   
+      inputField.type = "text";                           
+    } else {
+        if (!inputFieldImg.src.includes('assets/svg/lock.svg')) {
+            inputFieldImg.src = '/assets/svg/visibility_off.svg';
+            inputField.type = "password";   
+        }                       
+    }
+}
+
+/**
+ * This function removes the start animation after it has been run through once.
+ * 
+ */
+function landingPageAnimation() {
+        setTimeout(() => {
+            document.getElementById("loadAnimation").classList.add("loader-hidden");
+          }, 200);
+          setTimeout(() => {
+            document.getElementById("loadAnimation").classList.add("d-none");
+          }, 1000);
+}
+
+/**
+ * This function checks whether the passwords entered are the same and whether the user has agreed to the privacy policy regulations.
+ * 
+ * @param {object} event - This event is used to prevent the form from being automatically submitted.
+ */
+async function signUp(event) {
+    event.preventDefault();
+    let passwordDontMatchMsg = document.getElementById('passwordDontMatch');
+    let password = document.getElementById("signUpPasswordIndexHtml").value;
+    let confirmPassword = document.getElementById("signUpConfirmPasswordIndexHtml").value;
+    let privacyPolicyCheck = document.getElementById('acceptPrivacyPolicy');
+    if (password === confirmPassword &amp;&amp; privacyPolicyCheck.src.includes(`/assets/svg/checkmark.svg`)) {
+        successfullSignUp();
+    } else if (password != confirmPassword ){
+        passwordDontMatchMsg.classList.remove('d-none');
+        passwordDontMatchMsg.innerHTML = `Ups! your password doesnt match`;
+    } else {
+        passwordDontMatchMsg.classList.remove('d-none');
+        passwordDontMatchMsg.innerHTML = `Agree to our privacy policy!`;
+    }
+}
+
+
+/**
+ * This function is executed once the passwords are the same and the privacy policy rules are accepted, 
+ * then the information is processed in other functions.
+ * 
+ */
+function successfullSignUp() {
+    localStorage.setItem('isSignedUp', true);
+    let userName = document.getElementById('signUpNameIndexHtml').value;
+    localStorage.setItem('userName', userName);
+    setProfile();
+    getSideMenuCharacters('signUp');
+    signupSuccessfullAnimation();
+}
+
+
+/**
+ * This function takes the created JSON and sends it to Firebase via the "postData()" function.
+ * 
+ */
+async function setProfile() {
+    let data = await getDataForProfile();
+    postData('user', data);
+}
+
+/**
+ * This function creates a profile from the information in the signUp input fields.
+ * 
+ * @returns - Returns the profile as JSON
+ */
+async function getDataForProfile() {
+    userData = {
+        mail: document.getElementById('signUpEmailIndexHtml').value,
+        name: document.getElementById('signUpNameIndexHtml').value,
+        password: document.getElementById('signUpPasswordIndexHtml').value,
+        initialUserLetters: await getInitialLettersFromInput(),
+    };
+    return userData;
+}
+
+/**
+ * This function loads all user profiles from the database
+ * 
+ * @returns - Returns all user profiles from the database as an array.
+ */
+async function getUsers() {
+    try {
+      let data = await loadData('user');
+      let user = [];
+      for (const key in data) { 
+        if (data.hasOwnProperty(key)) { 
+            user.push({ id: key, ...data[key] });
+        }
+      }
+      return user;
+    } catch (error) {
+      throw error;
+    }
+}
+
+/**
+ * This function loads all the user profile names and stores them in an array.
+ * 
+ * @returns - Returns the last name from the userNames array
+ */
+async function getUserName() {
+    let users = await getUsers();
+    let userNames = [];
+    for (let i = 0; i &lt; users.length; i++) {
+        const user = users[i];
+        userNames.push(user.name);
+    }
+    return userNames[userNames.length - 1];
+}
+
+/**
+ * This function checks whether the email entered is equal to the email who is stored in the Firebase. Same with the password.
+ * 
+ * @returns - Returns "true" if email and password are identical to email and password in Firebase. Otherwise "false".
+ */
+async function validateForm() {
+    let incorrectMailOrPasswordMsg = document.getElementById('incorrectMailOrPassword');
+    let passwordIsEqual = await comparePasswords();
+    let mailIsEqual = await compareMails();
+    if (passwordIsEqual != 'passwordIsEqual' || mailIsEqual != 'mailIsEqual') {
+        incorrectMailOrPasswordMsg.classList.remove('d-none');
+        return false;
+    } else {
+        localStorage.setItem('userName', await getUserName());
+        localStorage.setItem('isSignedUp', true);
+        await getSideMenuCharacters('login')
+        window.location.href = document.getElementById("loginForm").action;
+        return true;
+    }
+}
+
+/**
+ * This function loads all user emails from firebase into an array.
+ * 
+ * @returns - Returns the array with the emails.  
+ */
+async function getSignedUpMail() {
+    let users = await getUsers();
+    let userMails = [];
+    for (let i = 0; i &lt; users.length; i++) {
+        const user = users[i];
+        userMails.push(user.mail);
+    }
+    return userMails;
+}
+
+/**
+ * This function loads all user passwords from firebase into an array.
+ * 
+ * @returns Returns the array with the passwords.
+ */
+async function getSignedUpPssword() {
+    let users = await getUsers()
+    let userPasswords = [];
+    for (let i = 0; i &lt; users.length; i++) {
+        const user = users[i];
+        userPasswords.push(user.password);
+    }
+    return userPasswords;
+}
+
+/**
+ * This function checks whether the password entered matches a password from the Firebase. 
+ * 
+ * @returns - Returns 'passwordIsEqual' as a string if the passwords are the same.
+ */
+async function comparePasswords() {
+    let signedUpPsswords = await getSignedUpPssword();
+    let enteredPassword =  document.getElementById('loginPasswordIndexHtml').value;
+    for (let i = 0; i &lt; signedUpPsswords.length; i++) {
+        const signedUpPssword = signedUpPsswords[i];
+        if (signedUpPssword === enteredPassword) {
+            return 'passwordIsEqual';
+        }
+    }
+}
+
+/**
+ * This function checks whether the email entered matches a email from the Firebase.
+ * 
+ * @returns - Returns 'mailIsEqual' as a string if the emails are the same.
+ */
+async function compareMails() {
+    let signedUpMails = await getSignedUpMail();
+    let enteredMail =  document.getElementById('loginEmailIndexHtml').value;
+    for (let i = 0; i &lt; signedUpMails.length; i++) {
+        const signedUpMail = signedUpMails[i];
+        if (signedUpMail === enteredMail) {
+            return 'mailIsEqual';
+        }
+    }
+}
+
+/**
+ * This function creates a string of the user's initials, in uppercase.
+ * 
+ * @returns - Returns the created initials.
+ */
+async function getInitialLettersFromInput() {
+    let inputText = document.getElementById('signUpNameIndexHtml').value.trim();
+    let words = inputText.split(" ");
+    if (words.length === 1) {
+      return words[0].charAt(0);
+    } else {
+      let initialLetters = words.map(word => word.charAt(0));
+      return initialLetters.join("").toUpperCase();
+    }
+}
+
+
+/**
+ * This function checks whether the user logs in with an account or as a guest. Depending on how they want to use the app, 
+ * the side menu will either show G for guest or their initials.
+ * 
+ * @param {string} loginChoice - This is the identifying feature in which way the user decides to log in.
+ */
+async function getSideMenuCharacters(loginChoice) {
+    localStorage.removeItem('sideMenuCharacters');
+    if (loginChoice === 'guest') {
+        localStorage.setItem('sideMenuCharacters', 'G');
+    } else if (loginChoice === 'login' || loginChoice === 'signUp') {
+        let initialLetters = await getInitialLetters();
+        let lastInitialLetter = initialLetters[initialLetters.length - 1];
+        localStorage.setItem('sideMenuCharacters', lastInitialLetter); 
+    }
+}
+
+/**
+ * This function loads all initials stored in the firebase into an array.
+ * 
+ * @returns - Returns the array with the initials. 
+ */
+async function getInitialLetters() {
+    let users = await getUsers();
+    let initialLetters = [];
+    for (let i = 0; i &lt; users.length; i++) {
+        const user = users[i];
+        initialLetters.push(user.initialUserLetters);
+    }
+    return initialLetters;
+}
+
+/**
+ * This function starts an animation as soon as a sign-up was successful.
+ * 
+ */
+function signupSuccessfullAnimation() {
+    let signupSuccessfullContainer = document.getElementById('signupSuccessfullContainer');
+    signupSuccessfullContainer.style.display = 'flex';
+
+    setTimeout(() => {
+        signupSuccessfullContainer.style.display = 'none';
+        showLoginForm();
+    }, 1000);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#OverlayTaskPopup">OverlayTaskPopup</a></li><li><a href="global.html#addBlurListener">addBlurListener</a></li><li><a href="global.html#addEditTaskToFirebase">addEditTaskToFirebase</a></li><li><a href="global.html#addEventListenerToInput">addEventListenerToInput</a></li><li><a href="global.html#addToSubtasks">addToSubtasks</a></li><li><a href="global.html#addTranslate">addTranslate</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#amountSubTasks">amountSubTasks</a></li><li><a href="global.html#assignPicturesToDiv">assignPicturesToDiv</a></li><li><a href="global.html#assignTheContact">assignTheContact</a></li><li><a href="global.html#blendItOut">blendItOut</a></li><li><a href="global.html#calcProgressBar">calcProgressBar</a></li><li><a href="global.html#cancelSubtask">cancelSubtask</a></li><li><a href="global.html#changeButtons">changeButtons</a></li><li><a href="global.html#changeInputFieldImg">changeInputFieldImg</a></li><li><a href="global.html#changeToActive">changeToActive</a></li><li><a href="global.html#changeToClicked">changeToClicked</a></li><li><a href="global.html#checkIfContactWasCreated">checkIfContactWasCreated</a></li><li><a href="global.html#checkIfDesktop">checkIfDesktop</a></li><li><a href="global.html#checkIfLoadContactIsNeeded">checkIfLoadContactIsNeeded</a></li><li><a href="global.html#checkInputFieldValue">checkInputFieldValue</a></li><li><a href="global.html#choosenContacts">choosenContacts</a></li><li><a href="global.html#cleanArrays">cleanArrays</a></li><li><a href="global.html#clearInputField">clearInputField</a></li><li><a href="global.html#clearTheForm">clearTheForm</a></li><li><a href="global.html#clickButtonSearch">clickButtonSearch</a></li><li><a href="global.html#closeMoveTask">closeMoveTask</a></li><li><a href="global.html#closeOverlay">closeOverlay</a></li><li><a href="global.html#closeOverlaySideClick">closeOverlaySideClick</a></li><li><a href="global.html#compareMails">compareMails</a></li><li><a href="global.html#comparePasswords">comparePasswords</a></li><li><a href="global.html#confirmContactCreation">confirmContactCreation</a></li><li><a href="global.html#confirmEditedSubtask">confirmEditedSubtask</a></li><li><a href="global.html#createContactEdit">createContactEdit</a></li><li><a href="global.html#createDivs">createDivs</a></li><li><a href="global.html#createName">createName</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteElementById">deleteElementById</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#descriptionChar">descriptionChar</a></li><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#drawContactDetailPic">drawContactDetailPic</a></li><li><a href="global.html#drawContactEditPic">drawContactEditPic</a></li><li><a href="global.html#drawContactEditPicDesktop">drawContactEditPicDesktop</a></li><li><a href="global.html#dropAt">dropAt</a></li><li><a href="global.html#editAddSub">editAddSub</a></li><li><a href="global.html#editDeleteSub">editDeleteSub</a></li><li><a href="global.html#editEditSub">editEditSub</a></li><li><a href="global.html#editRenderPriority">editRenderPriority</a></li><li><a href="global.html#editRenderSubtask">editRenderSubtask</a></li><li><a href="global.html#editSelectPriority">editSelectPriority</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskOverlay">editTaskOverlay</a></li><li><a href="global.html#emblemSvg">emblemSvg</a></li><li><a href="global.html#emptyEditSub">emptyEditSub</a></li><li><a href="global.html#emptyEditTask">emptyEditTask</a></li><li><a href="global.html#fetchAllAssignedContacts">fetchAllAssignedContacts</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#fetchTheData">fetchTheData</a></li><li><a href="global.html#fillEditContactForm">fillEditContactForm</a></li><li><a href="global.html#fillEditContactFormDesktop">fillEditContactFormDesktop</a></li><li><a href="global.html#filterAssignedContacts">filterAssignedContacts</a></li><li><a href="global.html#filterContactsEdit">filterContactsEdit</a></li><li><a href="global.html#filteredContacts">filteredContacts</a></li><li><a href="global.html#findTask">findTask</a></li><li><a href="global.html#formatTask">formatTask</a></li><li><a href="global.html#formatTasks">formatTasks</a></li><li><a href="global.html#generateHTMLcodeForContacts">generateHTMLcodeForContacts</a></li><li><a href="global.html#getAColor">getAColor</a></li><li><a href="global.html#getDataForPostContact">getDataForPostContact</a></li><li><a href="global.html#getDataForProfile">getDataForProfile</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getDescription">getDescription</a></li><li><a href="global.html#getId">getId</a></li><li><a href="global.html#getInitialLetters">getInitialLetters</a></li><li><a href="global.html#getInitialLettersFromInput">getInitialLettersFromInput</a></li><li><a href="global.html#getMail">getMail</a></li><li><a href="global.html#getPhoneNumber">getPhoneNumber</a></li><li><a href="global.html#getSideMenuCharacters">getSideMenuCharacters</a></li><li><a href="global.html#getSignedUpMail">getSignedUpMail</a></li><li><a href="global.html#getSignedUpPssword">getSignedUpPssword</a></li><li><a href="global.html#getTheCategoryOfTask">getTheCategoryOfTask</a></li><li><a href="global.html#getTheCurrentDate">getTheCurrentDate</a></li><li><a href="global.html#getTheDataForPostTask">getTheDataForPostTask</a></li><li><a href="global.html#getTheEditedData">getTheEditedData</a></li><li><a href="global.html#getTheEmblemsOfAssignedContacts">getTheEmblemsOfAssignedContacts</a></li><li><a href="global.html#getTheIdOfTask">getTheIdOfTask</a></li><li><a href="global.html#getTheInformation">getTheInformation</a></li><li><a href="global.html#getTheNewName">getTheNewName</a></li><li><a href="global.html#getTheReadyData">getTheReadyData</a></li><li><a href="global.html#getTheSubtaskStatus">getTheSubtaskStatus</a></li><li><a href="global.html#getTheSubtasksOfTask">getTheSubtasksOfTask</a></li><li><a href="global.html#getTheValueForFunction">getTheValueForFunction</a></li><li><a href="global.html#getTitle">getTitle</a></li><li><a href="global.html#getUserName">getUserName</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#handleError">handleError</a></li><li><a href="global.html#hideContactDetails">hideContactDetails</a></li><li><a href="global.html#hideContactsToAssign">hideContactsToAssign</a></li><li><a href="global.html#hideEditOverlay">hideEditOverlay</a></li><li><a href="global.html#hideOverlay">hideOverlay</a></li><li><a href="global.html#hideTheFormular">hideTheFormular</a></li><li><a href="global.html#hideThisContact">hideThisContact</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#ifContainerEmpty">ifContainerEmpty</a></li><li><a href="global.html#ifOverlay">ifOverlay</a></li><li><a href="global.html#label">label</a></li><li><a href="global.html#landingPageAnimation">landingPageAnimation</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadCurrentContactId">loadCurrentContactId</a></li><li><a href="global.html#loadSingleContact">loadSingleContact</a></li><li><a href="global.html#loadSingleContactDesktop">loadSingleContactDesktop</a></li><li><a href="global.html#moveCategoryTask">moveCategoryTask</a></li><li><a href="global.html#onSubtaskBlur">onSubtaskBlur</a></li><li><a href="global.html#overlayContactsRead">overlayContactsRead</a></li><li><a href="global.html#overlayDeleteTask">overlayDeleteTask</a></li><li><a href="global.html#overlayLabelCheck">overlayLabelCheck</a></li><li><a href="global.html#overlayPrio">overlayPrio</a></li><li><a href="global.html#overlayRender">overlayRender</a></li><li><a href="global.html#overlaySubtaskCheck">overlaySubtaskCheck</a></li><li><a href="global.html#overlayTask">overlayTask</a></li><li><a href="global.html#priorityEmblem">priorityEmblem</a></li><li><a href="global.html#processContacts">processContacts</a></li><li><a href="global.html#readInTasks">readInTasks</a></li><li><a href="global.html#readTheTokens">readTheTokens</a></li><li><a href="global.html#refreshContactToLoad">refreshContactToLoad</a></li><li><a href="global.html#removeHighlight">removeHighlight</a></li><li><a href="global.html#removeShadow">removeShadow</a></li><li><a href="global.html#removeTranslate">removeTranslate</a></li><li><a href="global.html#renderAssignSelector">renderAssignSelector</a></li><li><a href="global.html#renderAwaitFeedback">renderAwaitFeedback</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#renderChoosenContactsEmblems">renderChoosenContactsEmblems</a></li><li><a href="global.html#renderContactListEdit">renderContactListEdit</a></li><li><a href="global.html#renderDone">renderDone</a></li><li><a href="global.html#renderEditDate">renderEditDate</a></li><li><a href="global.html#renderEditTask">renderEditTask</a></li><li><a href="global.html#renderInProgress">renderInProgress</a></li><li><a href="global.html#renderMoveTask">renderMoveTask</a></li><li><a href="global.html#renderToDo">renderToDo</a></li><li><a href="global.html#rewriteButton">rewriteButton</a></li><li><a href="global.html#saveEditsToContact">saveEditsToContact</a></li><li><a href="global.html#selectContact">selectContact</a></li><li><a href="global.html#selectContactIf">selectContactIf</a></li><li><a href="global.html#setDateListener">setDateListener</a></li><li><a href="global.html#setProfile">setProfile</a></li><li><a href="global.html#showAddContact">showAddContact</a></li><li><a href="global.html#showContactDetails">showContactDetails</a></li><li><a href="global.html#showContactsToAssign">showContactsToAssign</a></li><li><a href="global.html#showEditOverlay">showEditOverlay</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showPassword">showPassword</a></li><li><a href="global.html#showSearchResults">showSearchResults</a></li><li><a href="global.html#showShadow">showShadow</a></li><li><a href="global.html#showTheNotificaiton">showTheNotificaiton</a></li><li><a href="global.html#showThisContact">showThisContact</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signupSuccessfullAnimation">signupSuccessfullAnimation</a></li><li><a href="global.html#startDragging">startDragging</a></li><li><a href="global.html#startReadingTasks">startReadingTasks</a></li><li><a href="global.html#storeNewData">storeNewData</a></li><li><a href="global.html#subTaskCheck">subTaskCheck</a></li><li><a href="global.html#subTaskNoShow">subTaskNoShow</a></li><li><a href="global.html#submitForm">submitForm</a></li><li><a href="global.html#successfullSignUp">successfullSignUp</a></li><li><a href="global.html#switchToAddTask">switchToAddTask</a></li><li><a href="global.html#taskContainer">taskContainer</a></li><li><a href="global.html#testForChoosenContact">testForChoosenContact</a></li><li><a href="global.html#toggleCheckboxValue">toggleCheckboxValue</a></li><li><a href="global.html#toggleSubstaskRender">toggleSubstaskRender</a></li><li><a href="global.html#updateTaskBoard">updateTaskBoard</a></li><li><a href="global.html#uploadData">uploadData</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Jul 12 2024 15:21:56 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

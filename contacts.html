@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/add_contact.css">
+    <link rel="stylesheet" href="/assets/css/contact.css">
+    <title>contacts</title>
+    <script src="/script.js"></script>
+    <script src="/assets/js/remoteStorage.js"></script>
+    <script src="/assets/js/contacts.js"></script>
+    <script src="/assets/js/add_contact.js"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/svg/join-logo.svg">
+
+    <script src="/assets/js/w3_include.js"></script>
+    <script src="/assets/js/contact_details.js"></script>
+</head>
+<body onload="init(), loadContacts('contacts')">
+    <div id="mobileTamplateContent" w3-include-html="/assets/templates/mobile_template.html"></div>
+    <div class="page-content">
+    <div id="contact-div"></div>
+    <div id="contact-details-desktop">
+        <div id="page-content-div">
+            <div class="top-container-desktop">
+                <div class="headline-div-desktop"><p class="contacts-headline">Contacts</p><img class="contacts-divider" src="/assets/svg/underline_blue.svg"><p class="contacts-subheadline">Better with a team</p></div>
+                <a href="/contacts.html" class="back-btn"></a>
+            </div>
+            <div id="middle-container-desktop" class="middle-container-desktop ">
+                
+                <div class="name-div"><img class="name-pic" ><p  class="name-headline">Tatjana Wolf</p></div> 
+                 <div class="bottom-container-desktop">
+                    <button class="edit-btn"></button>
+                    <button class="del-btn"></button>
+            </div>
+                <p class="contact-info-desktop">Contact Information</p>
+                <div>
+                    <p class="category-headline">Email</p>
+                    <p class="email">wolf@gmail.com</p>
+                    <p class="category-headline">Phone</p>
+                    <p class="phone">+49 2222 222 22 2</p>
+                </div>
+                
+                
+            </div>
+          
+        </div>
+
+
+    </div>
+    <button onclick="showAddContact()" class="add-contact-btn"></button>
+
+    <div id="overlay-container" class="overlay-container">
+
+        <div class="formular-container">
+        <div class="top-container">
+            <div class="close-btn-div"><button onclick="hideTheFormular('overlay-container')" class="close-btn"></button></div>
+            <div class="join-logo-div"><img class="addContactJoinLogo" src="/assets/svg/join-logo-white.svg"></div>
+            <div class="headline">Add Contact</div>
+            <div class="subheadline">Tasks are better with a team! </div>
+            <img class="divider" src="/assets/svg/underline_blue.svg">
+           
+
+        </div>
+            <img class="contact-pic" src="/assets/svg/Frame 79.svg">
+        <div class="bottom-container">
+            <form onsubmit="getTheInformation(event)" class="create-contact-form">
+                <input id="contact-name" type="text" required placeholder="Name">
+                <input id="contact-mail" type="email" required placeholder="Email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" title="Geben sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und Text jeweils vor und hinter diesen Zeichen stehen.">
+                <input id="contact-phone" type="tel" required placeholder="Phone" pattern="[0-9+ ]{3,}" minlength="3" title="Erlaubt sind Ziffern 0-9, das + Zeichen sowie Leerzeichen. Geben Sie mindestens 3 Stellen an">
+                <div class="addContact-btn-div">
+                    <button onclick="hideTheFormular('overlay-container')" type="button" class="cancel-addContact-btn">Cancel</button>
+                    <button type="submit" class="create-contact-btn">Create contact <img src="/assets/svg/check.svg"></button>
+                    
+                </div>
+                
+            </form>
+        </div>
+        </div>
+    </div>
+
+
+    <div id="edit-contact-container" class="overlay-container">
+
+        <div class="formular-container">
+        <div class="top-container">
+            <div class="close-btn-div"><button id="closeEditContactButton"  class="close-btn"></button></div>
+            <div class="join-logo-div"><img class="addContactJoinLogo" src="/assets/svg/join-logo-white.svg"></div>
+            <div class="headline">Edit Contact</div>
+            <img class="divider" src="/assets/svg/underline_blue.svg">
+           
+
+        </div>
+            <img id="editContactPic-desktop" class="contact-pic" src="/assets/svg/Frame 79.svg">
+        <div class="bottom-container">
+            <form id="edit-contact-form-desktop" class="create-contact-form" onsubmit="">
+                <input id="contact-name-desktop" type="text" required placeholder="Name">
+                <input id="contact-mail-desktop" type="email" required placeholder="Email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" title="Geben sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und Text jeweils vor und hinter diesen Zeichen stehen.">
+                <input id="contact-phone-desktop" type="tel" pattern="[0-9+ ]{3,}" minlength="3" required placeholder="Phone" title="Erlaubt sind Ziffern 0-9, das + Zeichen sowie Leerzeichen. Geben Sie mindestens 3 Stellen an"">
+                <div class="addContact-btn-div">
+                    <button id="delete-contact-btn-desktop" onclick="hideTheFormular('overlay-container')" type="button" class="delete-contact-btn-desktop">Delete</button>
+                    <button id="save-edits-btn-desktop" type="submit" class="create-contact-btn-desktop">Save<img src="/assets/svg/check.svg"></button>
+                    
+                </div>
+                
+            </form>
+        </div>
+        </div>
+    </div>
+    
+</div>
+    <div id="overlayVeilAddContact" class="overlayVeilAddContact none"></div>
+    
+</body>
+</html>

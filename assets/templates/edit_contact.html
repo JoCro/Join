@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add Contact</title>
+    <link rel="stylesheet" href="/edit_contact.css">
+    
+     
+</head>
+<body>
+
+    <div class="overlay-container">
+        <div class="top-container">
+            <div class="close-btn-div"><button class="close-btn"></button></div>
+            <div class="headline">Edit Contact</div>
+            
+            <img class="divider" src="/assets/svg/underline_blue.svg">
+           
+
+        </div>
+ <img class="contact-pic" src="/assets/svg/Frame 79-2.svg">
+        <div class="bottom-container">
+            <form class="create-contact-form">
+                <input id="contact-name" type="text" required placeholder="Name">
+                <input id="contact-mail" type="email" required placeholder="Email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" title="Geben Sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und ein Text jeweils vor und hinter diesen Zeichen stehen">
+                <input id="contact-phone" type="tel" required placeholder="Phone" pattern="[0-9+ ]{3,}" title="Erlaubt sind Ziffern 0-9, das + Zeichen sowie Leerzeichen. Geben Sie mindestens 3 Stellen an">
+                <div class="button-div"><button class="delete-contact-btn">Delete</button><button class="save-contact-btn">Save<img src="/assets/svg/check.svg"></button>
+                </div>
+             
+            </form>
+        </div>
+
+    </div>
+    
+</body>
+</html>

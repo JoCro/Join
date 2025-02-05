@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/assets/js/w3_include.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/contact_details.css">
+    <link rel="stylesheet" href="/edit_contact.css">
+    <script src="/assets/js/remoteStorage.js"></script>
+    <script src="/assets/js/contacts.js" defer></script>
+    <script src="/assets/js/contact_details.js" defer></script>
+    <script src="/script.js"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/svg/join-logo.svg">
+    
+</head>
+<body onload="loadCurrentContactId(), init()">
+    <div id="mobileTamplateContent" w3-include-html="/assets/templates/mobile_template.html"></div>
+    <div id="page-content-div">
+    <div class="top-container">
+        <div class="headline-div"><p class="contacts-headline">Contacts</p><p class="contacts-subheadline">Better with a team</p><img class="contacts-divider" src="/assets/svg/underline_blue.svg"></div>
+        <a href="/contacts.html" class="back-btn"></a>
+    </div>
+    <div class="middle-container">
+        
+        <div class="name-div"><img class="name-pic" ><p  class="name-headline">Tatjana Wolf</p></div>
+        <p class="contact-info">Contact Information</p>
+        <div>
+            <p class="category-headline">Email</p>
+            <p class="email"><a href="mailto:wolf@gmail.com">wolf@gmail.com</a></p>
+            <p class="category-headline">Phone</p>
+            <p class="phone">+49 2222 222 22 2</p>
+        </div>
+        
+        
+    </div>
+    <div class="bottom-container">
+        <button id="more-button" class="more-btn"></button>
+        <div id="edit-menu" class="edit-menu-sb hide">
+            <button class="edit-btn"></button>
+            <button class="del-btn"></button>
+        </div>
+        
+    </div>
+</div>
+
+<div id="overlayVeil" class="overlayVeil displayNone"></div>
+<!--from here Overlay-Form-->
+
+
+<div id="overlay-editContact" class="overlay-container">
+    <div class="upper-container">
+        <div class="close-btn-div"><button id="closeEditContactButton" class="close-btn"></button></div>
+        <div class="headline">Edit Contact</div>
+        
+        <img class="divider" src="/assets/svg/underline_blue.svg">
+       
+
+    </div>
+<img id="editContactPic" class="contact-pic" src="/assets/svg/Frame 79-2.svg">
+    <div class="down-container">
+        <form id="edit-contact-form"  class="create-contact-form">
+            <input id="contact-name" type="text" required placeholder="Name">
+            <input id="contact-mail" type="email" required placeholder="Email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" title="Geben Sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und Text jeweils vor und hitner diesen Zeichen stehen.">
+            <input id="contact-phone" type="tel" required placeholder="Phone" pattern="[0-9+ ]{3,}" title="Erlaubt sind Ziffern 0-9, das + Zeichen sowie Leerzeichen. Geben Sie mindestens 3 Stellen an">
+            <div class="button-div"><button id="delete-contact-btn" type="button" class="delete-contact-btn">Delete</button>
+                <button id="save-edits-btn" type="submit" class="save-contact-btn">Save<img src="/assets/svg/check.svg"></button>
+            </div>
+         
+        </form>
+    </div>
+
+</div>
+<div id="notificationAddContact"><img src="/assets/svg/Conyact succ.. created overlay.svg"></div>
+ 
+</body>
+
+</html>

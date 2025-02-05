@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/mobile_template.css">
+    <title>Join</title>
+    <script  src="/assets/js/remoteStorage.js"></script>
+    <script src="/script.js"></script>
+    <script src="/assets/js/w3_include.js"></script>
+    <script src="/assets/js/login.js"></script>
+</head>
+<body onload="setSideMenuCharacters()" class="mobileHTML-body">
+    <header>
+        <img class="join-logo" src="/assets/svg/join-logo.svg" alt="join logo">
+        <img class="join-logo-big" src="/assets/svg/join_logo_big.svg" alt="join logo">
+        <span class="header-title-desktop">Kanban Project Management Tool</span>
+        <div class="header-navigation">
+            <a href="/assets/templates/help.html"><img class="help-img" src="/assets/svg/help.svg" alt=""></a>
+            <span onclick="openSideMenu()" id="smBtn" class="sm-btn">SM</span>
+            <nav id="sideMenu" class="side-menu">
+                <ul class="ul-side-menu">
+                    <li class="li-side-menu"><a href="/assets/templates/help.html">Help</a></li>
+                    <li class="li-side-menu"><a href="/assets/templates/legal_notice.html">Legal Notice</a></li>
+                    <li class="li-side-menu"><a href="/assets/templates/privacy_policy.html">Privacy Policy</a></li>
+                    <li class="li-side-menu"><a href="/index.html">Log out</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <img class="join-logo-desktop" src="/assets/svg/join-logo-white.svg" alt="">
+
+    <nav class="nav-mobile">
+        <ul class="nav-ul">
+            <a id="summaryBtn" class="menu-links" href="/summary.html">
+                <img class="menu-icons" src="/assets/svg/summary-icon.svg" alt="summary">
+                <span class="menu-links-text">Summary</span>
+            </a>
+        </ul>
+        <div class="switch-sequence">
+            <ul class="nav-ul">
+                <a id="boardBtn" class="menu-links" href="/board.html">
+                    <img class="menu-icons" src="/assets/svg/board-icon.svg" alt="board">
+                    <span class="menu-links-text">Board</span>
+                </a>
+            </ul>
+            <ul class="nav-ul">
+                <a id="addTaskBtn" class="menu-links" href="/add_task.html">
+                    <img class="menu-icons" src="/assets/svg/add-task-icon.svg" alt="add">
+                    <span class="menu-links-text">Add Tasks</span>
+                </a>
+            </ul>
+        </div>
+        <ul class="nav-ul">
+            <a id="contactsBtn" class="menu-links" href="/contacts.html">
+                <img class="menu-icons" src="/assets/svg/contacts-icon.svg" alt="contacts">
+                <span class="menu-links-text">Contacts</span>
+            </a>
+        </ul>
+    </nav>
+
+    <footer class="nav-footer">
+        <a class="nav-footer-link" href="/assets/templates/privacy_policy.html">Privacy Policy</a>
+        <a class="nav-footer-link" href="/assets/templates/legal_notice.html">Legal notice</a>
+    </footer>
+    
+    <script>
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/mobile_template.css">
+    <link rel="stylesheet" href="/assets/css/summary.css">
+    <link rel="icon" type="image/x-icon" href="/assets/svg/join-logo.svg">
+    <title>Summary</title>
+    <script src="/script.js"></script>
+    <script src="/assets/js/w3_include.js"></script>
+    <script src="/assets/js/remoteStorage.js"></script>
+    <script src="/assets/js/summary.js"></script>
+    <script src="/assets/js/login.js"></script>
+</head>
+<body class="summary-body" onload="init(); setSummaryNumbers(); greetingMsg()">
+    <div id="greetingMsgAnimation" class="greetingMsgAnimation"><b id="greetingName"></b></div>
+    <div id="mobileTamplateContent" w3-include-html="/assets/templates/mobile_template.html"></div>
+    <div class="mt-128px summary-title-div">
+        <h1>Join 360</h1>
+        <img class="summary-underline-blue-desktop" src="assets/svg/parting_line_blue.svg" alt="">
+        <span class="summary-subtitle">Key Metrics at a Glance</span>
+        <img class="summary-underline-blue" src="assets/svg/underline-lightblue.svg" alt="">
+    </div>
+    <div class="summary-container">
+        <div class="summary-container-part">
+                <a href="/board.html" class="todo-container">
+                    <img class="edit-and-check-icon-hover" src="/assets/svg/edit_summary.svg" alt="">
+                    <img class="edit-and-check-icon" src="/assets/svg/edit_white_summary.svg" alt="">
+                    <span class="summary-sub-text"><b id="type0Count" class="summary-task-numbers">0</b> to-do</span>
+                </a>
+                <a href="/board.html" class="todo-container">
+                    <img class="edit-and-check-icon-hover" src="/assets/svg/check_summary.svg" alt="">
+                    <img class="edit-and-check-icon" src="/assets/svg/check_white_summary.svg" alt="">
+                    <span class="summary-sub-text"><b id="type3Count" class="summary-task-numbers">0</b> done</span>
+                </a>
+        </div>
+        <a href="/board.html" class="urgent-task-container">
+            <div class="urgent-task-counter-container">
+                <img class="summary-icons" src="/assets/svg/urgent.svg" alt="">
+                <span class=""><b id="urgentTasksCount" class="summary-task-numbers">0</b> urgent</span>
+            </div>
+            <img src="/assets/svg/summary_divide_line.svg" alt="">
+            <span class="urgent-task-deadline-text"><b id="upcomingDeadline" class="urgent-task-deadline">October 16, 2022</b>
+                Upcoming Deadline
+            </span>
+        </a>    
+        <div class="summary-container-part">
+            <a href="/board.html" class="tasks-in-board-container">
+                <span class="summary-sub-text">
+                    <b id="tasksInBoardCount" class="summary-task-numbers">0</b> tasks <br> in board
+                </span>
+            </a>
+            <a href="/board.html" class="tasks-in-board-container">
+                <span class="summary-sub-text">
+                    <b id="type1Count" class="summary-task-numbers">0</b> tasks <br> in Progress
+                </span>
+            </a>
+            <a href="/board.html" class="tasks-in-board-container">
+                <span class="summary-sub-text">
+                    <b id="type2Count" class="summary-task-numbers">0</b> Awaiting <br> feedback
+                </span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

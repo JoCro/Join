@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/login_media.css">
+    <link rel="icon" type="image/x-icon" href="/assets/svg/join-logo.svg">
+    <title>Join</title>
+    <script src="/script.js"></script>
+    <script src="/assets/js/w3_include.js"></script>
+    <script src="/assets/js/remoteStorage.js"></script>
+    <script src="/assets/js/login.js"></script>
+</head>
+<body onload="landingPageAnimation()" class="login-body">
+    <div id="loadAnimation"></div>
+    <header>
+        <img id="logInHeaderLogo" class="join-logo-indexhtml" src="/assets/svg/join-logo.svg" alt="">
+        <img id="logInHeaderLogoBig" class="join-logo-indexhtml" src="/assets/svg/join_logo_big.svg" alt="">
+    </header>
+    <div id="loginParentDiv">
+        <div class="login-card-div">
+            <div class="login-card">
+                <div class="login-underline-div">
+                    <h1>Log in</h1>
+                    <div class="login-underline"></div>
+                </div>
+                <form id="loginForm" class="form-indexhtml" action="/summary.html" onsubmit="return false">
+                    <div class="login-input-divs">
+                        <div class="login-input-div-indexhtml mb-40px">
+                            <input class="login-input-indexhtml" id="loginEmailIndexHtml" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" type="email"  
+                            title="Geben sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und Text jeweils vor und hinter diesen Zeichen stehen." 
+                            placeholder="Email" required>
+                            <div class="input-icon">
+                                <img src="/assets/svg/mail.svg" alt="Email Icon">
+                            </div>
+                        </div>
+                        <div class="login-input-div-indexhtml">
+                            <input oninput="changeInputFieldImg(this)" class="login-input-indexhtml" id="loginPasswordIndexHtml" type="password" placeholder="Password" required>
+                            <div class="input-icon">
+                                <img onclick="showPassword(this)" src="/assets/svg/lock.svg" alt="Password Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="incorrect-msg-div">
+                        <p id="incorrectMailOrPassword" class="incorrect-msg d-none">Incorrect email or password!</p>
+                    </div>
+                    <div class="remember-me-div mt-40px">
+                        <img id="rememberMe" onclick="toggleCheckbox(this)" class="remember-me-checkbox" src="/assets/svg/rectangle.svg">
+                        <p class="remember-me-p">Remember me</p>
+                    </div>
+                <div class="login-btns-div">
+                    <button type="button" onclick="validateForm()" class="login-btn">Log in</button>
+                    <a href="/summary.html"><button onclick="getSideMenuCharacters('guest')" class="guest-login-btn" type="button">Guest Log in</button></a>
+                </div>
+                </form>
+            </div>
+        </div>
+    
+        <div class="sign-up-div">
+            <p class="sign-up-p">Not a Join user?</p>
+            <button onclick="showRegisterForm()" class="sign-up-btn">Sign up</button>
+        </div>
+    </div>
+    
+    <!--------------------------------------- SIGN UP CARD --------------------------------------->
+
+    <div id="signupParentDiv" class="d-none">
+        <div class="login-card-div">
+            <div class="login-card">
+                <div class="arrow-login-underline-div">
+                    <div class="empty-div"></div>
+                    <div class="login-underline-div">
+                        <h1 class="signup-title">Sign up</h1>
+                        <div class="login-underline"></div>
+                    </div>
+                    <img onclick="showLoginForm()" class="sign-up-arrow-left" src="/assets/svg/arrow-left-line.svg" alt="Back arrow">
+                </div>
+
+                <form id="signUpForm" class="form-indexhtml" action="/summary.html" onsubmit="return signUp(event)">
+                    <div class="login-input-div-indexhtml">
+                        <div class="login-input-div-indexhtml">
+                            <input class="login-input-indexhtml" id="signUpNameIndexHtml" type="text" placeholder="Name" required>
+                            <div class="input-icon">
+                                <img src="/assets/svg/person.svg" alt="Name Icon">
+                            </div>
+                        </div>
+                        <div class="login-input-div-indexhtml">
+                            <input class="login-input-indexhtml" id="signUpEmailIndexHtml" type="email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" 
+                            title="Geben sie eine gültige Mail an. Es muss ein @-Zeichen, sowie ein . und Text jeweils vor und hinter diesen Zeichen stehen." 
+                            placeholder="Email" required>
+                            <div class="input-icon">
+                                <img src="/assets/svg/mail.svg" alt="Email Icon">
+                            </div>
+                        </div>
+                        <div class="login-input-div-indexhtml">
+                            <input oninput="changeInputFieldImg(this)" class="login-input-indexhtml" id="signUpPasswordIndexHtml" type="password" placeholder="Password" required>
+                            <div class="input-icon">
+                                <img onclick="showPassword(this)" src="/assets/svg/lock.svg" alt="Password Icon">
+                            </div>
+                        </div>
+                        <div class="login-input-div-indexhtml">
+                            <input oninput="changeInputFieldImg(this)" class="login-input-indexhtml" id="signUpConfirmPasswordIndexHtml" type="password" placeholder="Confirm Password" required>
+                            <div class="input-icon">
+                                <img onclick="showPassword(this)" src="/assets/svg/lock.svg" alt="Password Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="required-msg-div">
+                        <p id="passwordDontMatch" class="required-msg d-none">Ups! your password doesnt match</p>
+                    </div>
+                    <div class="accept-privacy-policy-div">
+                        <img id="acceptPrivacyPolicy" onclick="toggleCheckbox(this)" class="remember-me-checkbox" src="/assets/svg/rectangle.svg">
+                        <p class="remember-me-p">I accept the <a class="privacy-policy-link" href="/assets/templates/privacy_policy_nologin.html">Privacy Policy</a></p>
+                    </div>
+                    <div class="signup-btns-div">
+                        <button type="submit" class="signup-btn">Sign up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="d-none" id="signupSuccessfullContainer">
+            <img id="signupSuccessfull" src="/assets/svg/signup_successfull.svg">
+        </div>
+    </div>
+    
+    <footer class="footer-indexhtml">
+        <a onclick="" class="a-footer-infdexhtml" href="/assets/templates/privacy_policy_nologin.html">Privacy Policy</a>
+        <a onclick="" class="a-footer-infdexhtml" href="/assets/templates/legal_notice_nologin.html">Legal Notice</a>
+    </footer>
+</body>
+</html>

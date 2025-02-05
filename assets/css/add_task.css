@@ -1,0 +1,762 @@
+.headline {
+    margin-top: 80px;
+    width: calc(100% - 32px);
+    font-size: 47px;
+    font-weight: 700;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 32px;
+    height: 112px;
+    display: flex;
+    align-items: end;
+    background-color: #F6F7F8;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: sticky;
+    top: 80px;
+    justify-content: center;
+    z-index: 2;
+}
+
+.headline-text{
+    max-width: 396px;
+    text-align: left;
+    width: 100%;
+}
+
+input {
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.content-container {
+    width: calc(100% - 32px);
+    margin-left: 16px;
+    margin-right: 16px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+
+.subheadlineDiv {
+    display: flex;
+}
+
+.subheadline{
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 8px;
+}
+
+.marker{
+    color: #ff8190;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#title-input{
+    height: 40px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 396px;
+    padding-inline: 21px;
+    padding-bottom: 4px;
+}
+
+.alert-text{
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff8190;
+}
+
+#title-input::placeholder{
+    font-size: 16px;
+    font-weight: 400;
+    color: #D1D1D1;
+}
+
+#descriptionInput{
+    width: 100%;
+    max-width: 396px;
+    height: 88px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    resize: none;
+    padding-inline-start: 21px;
+    padding-top: 18px;
+    padding-inline-end: 21px;
+    box-sizing: border-box;
+}
+
+#descriptionInput::placeholder{
+    font-size: 16px;
+    font-weight: 400;
+    color: #D1D1D1;
+}
+
+.descriptionDiv{
+    padding-bottom: 32px;
+}
+
+.titleDiv{
+    padding-bottom: 16px;
+}
+
+.selector{
+    width: 100%;
+    max-width: 396px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    padding: 12px 16px 12px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 24px 24px ; 
+}
+
+.dropdown-img{
+    background: url(/assets/svg/arrow_drop_downaa.svg)calc(100% - 16px);
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 24px 24px;
+}
+
+.selector:hover{
+    cursor: pointer;
+}
+
+select {
+    -webkit-appearance: none !important; 
+    -moz-appearance: none !important;
+   appearance: auto;
+} 
+
+.all-content-div{
+    height: 100vh;
+    overflow-y: overlay;
+    overflow-x: hidden;
+}
+
+.assignedDiv{
+    padding-bottom: 16px;
+    max-width: 396px;
+}
+
+.urgent-btn{
+    background-color: white;
+    background-image: url(/assets/svg/Prio\ alta.svg);
+    background-position: calc(100% - 20.67px);
+    background-repeat: no-repeat;
+    background-size: 20px 14.51px;
+    padding-inline-end: 48.67px;
+}
+
+.urgent-btn-active{
+    background-image: url(/assets/svg/Prio\ alta-2.svg);
+    background-position: calc(100% - 20.67px);
+    background-repeat: no-repeat;
+    background-size: 20px 14.51px;
+    padding-inline-end: 48.67px;
+    background-color: #FF3D00;
+    color: white;
+    font-weight: 700 !important;
+}
+
+.medium-btn{
+    background-color: white;
+    background-image: url(/assets/svg/Prio\ media.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 7.45px;
+    background-position: calc(100% - 16.17px);
+    padding-inline-end: 44.17px;
+    font-size: 16px;
+}
+
+.medium-btn-active{
+    background-color: #FFA800;
+    color: white;
+    background-image: url(/assets/svg/Prio\ media-2.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 7.45px;
+    background-position: calc(100% - 16.17px);
+    padding-inline-end: 44.17px;
+    font-weight: 700 !important;
+}
+
+
+.low-btn{
+    background-color: white;
+    background-image: url(/assets/svg/Prio\ baja.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 14.51px;
+    background-position: calc(100% - 30.67px) ;
+    padding-inline-end: 38.17px;
+}
+
+.low-btn-active{
+    background-color: #7ae229;
+    color: white;
+    background-image: url(/assets/svg/Prio\ baja-2.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 14.51px;
+    background-position: calc(100% - 30.67px) ;
+    padding-inline-end: 38.17px;
+    font-weight: 700 !important;
+}
+
+
+#datePicker{
+    width: 100%;
+    max-width: 396px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 8px, 21px, 8px, 21px;
+    border: 1px solid #D1D1D1;
+    padding-inline: 21px;
+    background-image: url(/assets/svg/event.svg);
+    background-position: calc(100% - 21px);
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    background-color: white;
+    margin-bottom: 4px;
+}
+
+#datePicker:hover{
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover{
+    cursor: pointer;
+}
+
+input[type="date"]::-moz-focus-inner{
+    background: transparent;
+}
+
+input[type="date"]::-moz-focus-inner:hover{
+    cursor: pointer;
+}
+
+.createDiv{
+    display: flex;
+    width: 100%;
+    max-width: 428px;
+    height: 88px;
+    padding: 16px;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.explanation-div{
+    display: flex;
+    height: 24px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 24px;
+    width: 163px;
+}
+
+.addTaskDivider{
+    display: none;
+}
+
+.create-btn{
+    width: 183px;
+    height: 56px;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 21px;
+    border: 0 !important;
+    line-height: 25.2px;
+    font-weight: 700;
+    background-color:  #2A3647;
+    color: white;
+    background-image: url(/assets/svg/check.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 16px);
+    background-size: 24px 24px;
+    box-sizing: border-box;
+    text-align: start;
+    display: flex;
+    align-items: center;  
+    gap: 4px;  
+}
+
+.create-btn:hover{
+    cursor: pointer;
+    background-color: #29ABE2;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid transparent;
+}
+
+.dateDiv{
+    transition: all;
+    margin-bottom: 16px;
+}
+
+.category-div{
+    padding-bottom: 16px;
+}
+
+.subtask-div{
+    padding-bottom: 10px;
+    width: 100%;
+    max-width: 396px;  
+}
+
+#subtask-input{
+    height: 48px;
+    width: 100%;
+    max-width: 396px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+   padding: 14.5px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    box-sizing: border-box;
+}
+
+#subtask-input::placeholder{
+    color:  #D1D1D1;
+}
+
+.subtask-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 396px;
+}
+
+.subtask-btn-div{
+    display: flex;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+
+.subtask-plus-btn-div{
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+
+.plus-btn{
+    background-image: url("/assets/svg/Subtasks\ icons11-3.svg");
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+}
+
+.plus-btn:hover{
+    cursor: pointer;
+}
+
+.subtask-btn-div button:hover{ 
+    cursor: pointer;
+}
+
+.correct-btn{
+    background-image: url("/assets/svg/Subtasks\ icons11.svg");
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+}
+
+.cancel-btn{
+    background-image: url("/assets/svg/Subtasks\ icons11-2.svg");
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+}
+
+.btn-divider{
+    height: 24px;
+    border: 1px solid #D1D1D1; 
+}
+
+#list-of-subtasks{
+padding-top: 8px;
+padding-left: 40px;
+}
+
+#list-of-subtasks button:hover{
+cursor: pointer;
+}
+
+.content-of-subtask{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-subtask-div{
+    display: flex;
+    padding-right: 16px;
+}
+
+.edit-btn{
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    background-image: url("/assets/svg/Subtasks\ icons11-4.svg");
+}
+
+.trash-btn{
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    background-image: url("/assets/svg/Subtasks\ icons11-5.svg");
+}
+#list-of-subtasks li{
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.buttonDiv{
+    width: 100%;
+    max-width: 396px;
+    height: 61px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.buttonDiv button{
+    width: 100%;
+    max-width: 121.33px;
+    height: 41px;
+    border-radius: 10px;
+    border: unset;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+}
+
+.buttonDiv button:hover{
+    cursor: pointer;
+}
+
+.prioDiv{
+    padding-bottom: 16px;
+    height: 88px;
+}
+
+.none{
+    display: none;
+}
+
+.assignedContactPics{
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-height: 46px;
+    overflow-y: scroll;
+    
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.renameSubtaskDiv{
+    display: flex;
+    position: relative;
+    left: -40px;
+    width: calc(100% + 40px);
+    max-width: 396px;
+    justify-content: space-between;
+}
+
+.renameSubtaskDiv input{
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-bottom: 1px solid #29ABE2;
+    padding: 14.5px 0px 14.5px 16px;
+    font-size: 16px;
+    line-height: 19.2px;
+    font-weight: 400;
+}
+
+.edit-subtask-buttons{
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 12px;
+}
+
+.option{
+    max-width: 364px;
+    display: flex;
+    justify-content: space-between;
+    height: 56px;
+    margin-bottom: 2px;
+    align-items: center;
+    padding-left: 16px;
+    border-radius: 10px;
+}
+
+.option:hover{
+    cursor: pointer;
+}
+
+.checkbox-icon{
+    width: 24px;
+    height: 24px;
+    padding-right: 16px;
+}
+
+.addTaskCtrlButtons{
+    display: flex;
+}
+
+.cancelTaskBtn{
+    display: none;
+}
+
+.optionContainer{
+    max-height: 280px;
+    overflow-x: hidden !important;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    top: 0px;
+    right: 0px;
+    overflow: scroll;
+    z-index: 1;
+}
+
+.contactNameDiv{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.checked{
+    background-color: #2a3647;
+    color: white;
+}
+
+.dropdown-btn{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background-image: url('/assets/svg/arrow_drop_downaa.svg');
+    background-color: transparent;
+    transition: all 140ms ease-in-out;
+}
+
+.dropdown-btn:hover{
+    cursor: pointer;
+}
+
+.select-wrapper{
+    position: relative;
+    width: 100%;
+}
+
+.active{
+    animation: rotateIt ease-in-out 140ms;
+    transform: rotate(180deg);
+}
+
+@keyframes rotateIt{
+
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(90deg);
+    }
+    100%{
+        transform: rotate(180deg);
+    }
+}
+
+@media (max-width: 390px){
+
+    .prioLabel{
+        display: none;
+    }
+
+    .buttonDiv button{
+        background-position: center;
+    }
+}
+
+.addedToBoardNotification{
+    max-width: 326px;
+    height: 74px;
+}
+
+.notificationDiv{
+    transform: translateY(100vh);
+    transition: all 120ms ease-in-out;
+    align-self: center;
+}
+
+.showNotification{
+    transform: translateY(-50vh);
+    transition: all 120ms ease-in-out;
+    z-index: 205;
+}
+
+@media(max-width: 400px){
+    #addTaskForm{
+        width: 100%;
+    }
+}
+
+@media(min-width: 800px){
+    .content-container{
+        width: calc(100% - 232px);
+        margin-left: 232px;
+    }
+
+    .headline{
+        margin-left: 232px;
+        width: calc(100% - 232px);
+    }
+}
+
+@media(min-width: 1250px){
+    #addTaskForm{
+        display: flex;
+        gap: 48.62px;
+    }
+
+    .leftDiv{
+        width: 440px;
+    }
+
+    .rightDiv{
+        width: 440px;
+    }
+
+    .explanation-div{
+        position: relative;
+        right: 115%;
+        bottom: 0;
+        font-size: 20px;
+        width: unset;
+    }
+
+    .explanation{
+        width: 200px;
+    }
+
+    .content-container{
+        margin-left: calc(232px + 96px);
+        justify-content: unset;
+        margin-bottom: 0px;
+    }
+
+    .addTaskCtrlButtons{
+        gap: 16px;
+    }
+
+    .dateDiv{
+        height: 96px;
+        margin-bottom: 12px;
+    }
+
+    .prioDiv{
+        padding-bottom: 12px;
+    }
+
+    .category-div{
+        padding-bottom: 12px;
+        height: 80px;
+    }
+
+    .subtask-div{
+        height: fit-content;
+    }
+
+    .cancelTaskBtn{
+        display: unset;
+        width: 110px;
+        height: 56px;
+        padding: 16px;
+        border-radius: 10px;
+        border: 1px solid #2A3647;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 400;
+        background-image: url("/assets/svg/cancel_btn_black.svg");
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: calc(100% - 16px) center;
+        text-align: start;
+    }
+
+    .cancelTaskBtn:hover{
+        cursor: pointer;
+        border: 2px solid #29ABE2;
+        color: #29ABE2;
+        background-image: url("/assets/svg/cancel_blue.svg");
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+
+    .addTaskDivider{
+        display: unset;
+        width: 0;
+        height: 380px;
+        border: 1px solid #D1D1D1;
+    }
+
+    .createDiv{
+        margin-top: 30px;
+        justify-content: flex-end;
+        margin-left: 16px;
+        max-width: 396px;
+    }
+
+    .buttonDiv button{
+        max-width: 136px;
+        height: 56px;
+        width: 136px;
+    }
+    
+    #datePicker{
+        height: 48px;
+    }
+
+    #title-input{
+        height: 48px;
+    }
+
+    .all-content-div{
+        overflow-y: overlay;
+    }
+
+    .headline{
+        height: 73px;
+        width: 400px;
+        margin-top: 175px;
+        margin-left: calc(232px + 96px);
+        font-size: 61px;
+    }
+}

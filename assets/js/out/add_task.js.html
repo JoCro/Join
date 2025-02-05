@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: add_task.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: add_task.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let subtaskCount = 0;
+let priorityOfTask;
+let idOfNewTask;
+
+/**
+ * This function is used to determine, which priority-button will be highlighted 
+ * 
+ * @param {string} id - This parameter has to be an id of one of the priority-buttons
+ */
+function changeToActive(id){
+    let possibleId = ['urgent-btn', 'medium-btn', 'low-btn'];
+    possibleId.splice(possibleId.indexOf(id), 1);
+    priorityOfTask = id.split('-')[0];
+    let element = document.getElementById(id)
+    element.classList.toggle(`${id}-active`);
+    for (let i = 0; i &lt; possibleId.length; i++) {
+        const element = possibleId[i];
+        document.getElementById(element).classList.remove(`${element}-active`);
+    }
+}
+
+/**
+ * This function is used to either make subtask buttons visible and hide the + sign or vice versa.
+ * 
+ */
+function changeButtons(){
+    if (document.getElementById('subtask-buttons').classList.contains('none')){
+        document.getElementById('subtask-buttons').classList.remove('none');
+        document.getElementById('subtask-plus-button-div').classList.add('none');
+    }
+}
+
+/**
+ * This function checks, if the value of the subtask-inputfield is empty. If it`s empty, the subtask buttons will be hidden and the + sign reappears.
+ * 
+ */
+function onSubtaskBlur(){
+    let inputfield = document.getElementById('subtask-input');
+    if(inputfield.value === ''){
+        if(!document.getElementById('subtask-buttons').classList.contains('none')){
+            document.getElementById('subtask-buttons').classList.add('none');
+            document.getElementById('subtask-plus-button-div').classList.remove('none');
+        }
+    }
+}
+
+/**
+ * This function is used to check if the subtask-input exists. If it exists, an eventlistener(blur) will be given to it that will execute the function onSubtaskBlur every time when it looses focus
+ * 
+ */
+function addBlurListener(){
+    let subtaskInput = document.getElementById('subtask-input');
+    if(subtaskInput){
+        subtaskInput.addEventListener("blur", onSubtaskBlur);
+    }
+}
+
+/**
+ * This executes the function addBlurListener, when the page is completely loaded
+ * 
+ */
+document.addEventListener("DOMContentLoaded", addBlurListener);
+
+/**
+ * This function increases the subtaskCount by 1 and adds the value of the subtask, that was given in the subtask-inputfield, to the subtask-list in form of a list item. Then the value of the subtask-input is reseted.
+ * 
+ */
+function addToSubtasks(){
+    subtaskCount += 1;
+    let inputfield = document.getElementById('subtask-input');
+    let subtaskList = document.getElementById('list-of-subtasks');
+    if(inputfield.value != ''){
+        subtaskList.innerHTML += `&lt;li id=subtask${subtaskCount}>&lt;div class="content-of-subtask">&lt;div id="textOfSubtask${subtaskCount}">${inputfield.value}&lt;/div> &lt;div class="edit-subtask-div">&lt;button class="edit-btn" onclick="editSubtask('${subtaskCount}')">&lt;/button>&lt;div class="btn-divider">&lt;/div>&lt;button onclick="deleteElementById('subtask${subtaskCount}')" class="trash-btn">&lt;/button>&lt;/div>&lt;/div>&lt;/li>`;
+    }
+    inputfield.value = ``;
+    onSubtaskBlur();
+}
+
+/**
+ * This function is used to edit the clicked Subtask by showing the value of the subtask in an inputfield. The value of it can be overwritten and saved to the clicked subtask.
+ * 
+ * @param {string} id - this parameter is the id of the current subtask and is given by the call of the function through clicking the Add-Subtask-Button 
+ */
+function editSubtask(id){
+    let subtaskToChange = document.getElementById(`subtask${id}`);
+    let valueToInsert = document.getElementById(`textOfSubtask${id}`).innerHTML;
+    if(subtaskToChange){
+        let inputToEdit = document.createElement('div');
+        inputToEdit.setAttribute('id', `subtask${id}`);
+        inputToEdit.innerHTML = `&lt;input type="text" value="${valueToInsert}" id="edit-${subtaskToChange.getAttribute('id')}">&lt;div class="edit-subtask-buttons">&lt;button onclick="deleteSubtask('subtask${id}')" class="trash-btn">&lt;/button>&lt;div class="btn-divider">&lt;/div>&lt;button onclick="confirmEditedSubtask('${inputToEdit.id}', '${id}')" class="correct-btn">&lt;/button>&lt;/div>`
+        inputToEdit.classList.add('renameSubtaskDiv');
+        inputToEdit.focus();
+        subtaskToChange.parentNode.replaceChild(inputToEdit, subtaskToChange);
+    }
+}
+
+/**
+ * This function is used to change the past value of the subtask to the new overwritten value from the inputfield. It also changes the element from an inputfield back to a list item
+ * 
+ * @param {string} id - this is the id of the clicked subtask given by the function editSubtask
+ * @param {string} functionValue  - this is the number, which will be used to determine the correct subtask in the function. 
+ */
+function confirmEditedSubtask(id, functionValue){
+    let subtask = document.getElementById(id);
+    let editedText = document.getElementById(`edit-subtask${functionValue}`).value;
+    if(subtask){   
+        let subtaskToConfirm = document.createElement('li');
+        subtaskToConfirm.setAttribute('id', id);
+        subtaskToConfirm.innerHTML = `&lt;div class="content-of-subtask">&lt;div id="textOfSubtask${functionValue}">${editedText}&lt;/div>&lt;div class="edit-subtask-div">&lt;button class="edit-btn" onclick="editSubtask('${functionValue}')">&lt;/button>&lt;div class="btn-divider">&lt;/div>&lt;button class="trash-btn" onclick="deleteElementById('subtask${functionValue}')">&lt;/button>&lt;/div>&lt;/div>`
+        subtask.parentNode.replaceChild(subtaskToConfirm, subtask);
+    }
+}
+
+/**
+ * This function is used to delete the chosen subtask by clicking the delete/bin-button
+ * 
+ * @param {string} id - this is the id of the subtask-element
+ */
+function deleteSubtask(id){
+    let subtaskToDelete = document.getElementById(id);
+    subtaskToDelete.parentNode.removeChild(subtaskToDelete);  
+}
+
+/**
+ * This function is used to cancel the current subtask. The value of the Inputfield will be reseted and the function onSubtaskBlur will be executed
+ * 
+ */
+function cancelSubtask(){
+    let inputfield = document.getElementById('subtask-input');
+    inputfield.value = '';
+    onSubtaskBlur();
+}
+
+/**
+ * This function is used to delete a subtask
+ * 
+ * @param {string} elementId - This parameter is the id of the element which the user wants to delete. It is given on call of the function
+ */
+function deleteElementById(elementId){
+    let element = document.getElementById(elementId);
+    if (element){
+        element.parentNode.removeChild(element);   
+    }
+}
+
+/**
+ * This function is used to give the assigend-to-container every contact thats in the array contactsAsJson, so they can be displayed by clicking the assign-field
+ * 
+ */
+function renderAssignSelector(){
+    if(document.getElementById('optionContainer').innerHTML == ``){
+        document.getElementById('optionContainer').innerHTML = ``;
+        for (let i = 0; i &lt; contactsAsJson.length; i++) {
+            const contact = contactsAsJson[i];
+            document.getElementById('optionContainer').innerHTML += `&lt;div id="contact${i}" class="option" onclick="assignTheContact(this,${i})">&lt;div class="contactNameDiv">&lt;svg class="profile_pic" width="42px" height="42px">
+            &lt;circle cx="21" cy="21" r="20" stroke="white" stroke-width="2" fill="${contact['color']}" />
+            &lt;text x="12" y="25" fill="white" font-size="12px">${contact['vorname'].charAt(0)}${contact['name'].charAt(0)}&lt;/text>
+            &lt;/svg>&lt;div class="contactNames">${contact['vorname']} ${contact['name']}&lt;/div>&lt;/div>&lt;img id="checkbox${i}" class="checkbox-icon" src="/assets/svg/rectangle.svg">&lt;/div>`;
+        }
+    }
+}
+
+/**
+ * This function is used to change the css of the clicked div, that it can be clearly seen as checked. It also changes the icon from an empty checkbox to a checked-checkbox or vice versa by clicking the contact again.
+ * 
+ * @param {HTMLDivElement} element - The &lt;div> element which represents the clicked contact
+ * @param {number} checkboxID - This number will be used as the id of the checkbox in the function below
+ */
+function assignTheContact(element, checkboxID){
+    document.getElementById(element.id).classList.toggle('checked');
+    let checkbox = document.getElementById(`checkbox${checkboxID}`);
+    let src = checkbox.src;
+    if(document.getElementById(element.id).classList.contains('checked')){
+        checkbox.src = '/assets/svg/checkboxWhite.svg';
+    }else{
+        checkbox.src = '/assets/svg/rectangle.svg';
+    }
+    assignPicturesToDiv();
+}
+
+/**
+ * This function is used to display the profile-pics of the assigned contacts in the assignedContactPics-&lt;div>. It will be executed every time, when a contact is assigned
+ * 
+ */
+function assignPicturesToDiv(){
+    let checkedContacts = document.getElementsByClassName('checked');
+    document.getElementById('assignedContactPics').innerHTML = ``;
+    for (let index = 0; index &lt; checkedContacts.length; index++) {
+        const element = checkedContacts[index];
+        document.getElementById('assignedContactPics').innerHTML += `&lt;div>${element['childNodes'][0]['firstChild'].outerHTML}&lt;/div>`;
+    }
+}
+
+/**
+ * This function displays all contacts from the contactsAsJson-Array
+ * 
+ */
+function showContactsToAssign(){
+    document.getElementById('optionContainer').classList.remove('none');
+    if(!document.getElementById('dropdown-btn').classList.contains('active')){
+        document.getElementById('dropdown-btn').classList.add('active');
+    }
+}
+
+/**
+ * This function is used to filter the displayed contacts by the value of the assign-inputfield. The only displayed contacts will be the contacts that share the value of the inputfield with their names
+ * 
+ */
+function filterAssignedContacts(){
+    let assignableContacts = document.getElementsByClassName('contactNames');
+    let input = document.getElementById('contact-selector');
+    let filter = input.value.toLowerCase();
+    for (let i = 0; i &lt; assignableContacts.length; i++) {
+        const element = assignableContacts[i];
+        const text = element.innerText;
+        if(!text.toLowerCase().includes(filter)){
+            hideThisContact(`contact${i}`);
+        }else{
+            showThisContact(`contact${i}`);
+            if(!document.getElementById(`contact${i}`).classList.contains('checked')){
+                document.getElementById(`checkbox${i}`).src = '/assets/svg/rectangle.svg';
+            }   
+        }
+    }
+}
+
+/**
+ * This function is used to remove the current contact from display
+ * 
+ * @param {string} id - this parameter was given by the function filterAssignedContacts and is the id of the contact 
+ */
+function hideThisContact(id){
+    document.getElementById(id).classList.add('none');
+    document.getElementById(id).classList.remove('option');
+}
+
+/**
+ * This function is used to show the current contact
+ * 
+ * @param {String}  id - this parameter was given by the function filterAssignedContacts and is the id of the contact 
+ */
+function showThisContact(id){
+    document.getElementById(id).classList.add('option');
+    document.getElementById(id).classList.remove('none');
+}
+
+/**
+ * This function adds an eventlistener to the assing-inputfield which executes the filterAssignedContacts-function every time, some input is typed in.
+ * 
+ */
+function addEventListenerToInput(){
+    document.getElementById('contact-selector').addEventListener('input',filterAssignedContacts);
+}
+
+/**
+ * This function is used to hide all assignable contacts and determines if the dropdown button either points up or down
+ * 
+ * @param {string} button - the id of the dropdown-button 
+ */
+function hideContactsToAssign(button){
+    document.getElementById('optionContainer').classList.add('none');
+    if(button.classList.contains('active')){
+        button.classList.toggle('active');
+    } 
+}
+
+/**
+ * This function provides the sumitted formular from being reloaded and executes the functions below in order to complete and post the task
+ * 
+ * @param {object} event - This is an event-object passed by an eventlistener from a formular
+ * @param {String} tasktype - the type of a task, that determines the category of the task. By default it´s 0 for the category "to-do"
+ */
+async function getTheDataForPostTask(event, tasktype) {
+    let type = Number(tasktype);
+    event.preventDefault();
+    const data = await fetchTheData(type);
+    await postData('tasks', data);
+    await showNotification();
+}
+
+/**
+ * This function is used to get all the Data for the post-ready task in form of an JSON-Object which is represented by the variable data
+ * 
+ * @param {string} type - the type of a task, that determines the category of the task. By default it´s 0 for the category "to-do"
+ * @returns {JSON} data - the complete data-set for the current task
+ */
+async function fetchTheData(type){
+let data = {
+    title: document.getElementById('title-input').value,
+    description: document.getElementById('descriptionInput').value,
+    priority: priorityOfTask,
+    assignedTo: fetchAllAssignedContacts(),
+    contactEmblem: getTheEmblemsOfAssignedContacts(),
+    date: document.getElementById('datePicker').value,
+    subtask: getTheSubtasksOfTask(),
+    label: getTheCategoryOfTask(),
+    subtaskSum: getTheSubtaskStatus(getTheSubtasksOfTask()),
+    type: type,
+    taskid: await getTheIdOfTask()
+};
+return data;
+}
+
+/**
+ * This functino is used to display the animated "task added to board"-notification with a little delay. after the notification showed up, the window-location will change to the board.html page
+ * 
+ */
+async function showNotification() {
+    const notificationElement = document.getElementById('taskAddedNotification');
+    notificationElement.classList.remove('none');
+    setTimeout(() => {
+        if(window.location.href.includes('board.html')){
+            notificationElement.classList.remove('notificationDiv');
+            notificationElement.classList.add('notificationDivShowing');
+        }else{
+            notificationElement.classList.add('showNotification');
+        }
+    }, 100);
+    setTimeout(function() {
+        window.location.href = "/board.html";
+    }, 1000);
+}
+
+/**
+ * This function is used to determine the ID of the current task. It fetches the Value of the variable taskId from the database and changes the value of the variable idOfNewTask to that value +1. If there is no variable to fetch, the variable idOfNewTask becomes 0 and this value will be posted to the database with the name taskId
+ * 
+ * @returns {number} idOfNewTask - The id of the current task
+ */
+async function getTheIdOfTask(){
+    let id = await loadData('taskId');
+    if(id != null){
+        idOfNewTask = id + 1;
+        await putData('taskId', idOfNewTask);
+    }else{
+        idOfNewTask = 0;
+        await putData('taskId', idOfNewTask);
+    }
+    return idOfNewTask;  
+}
+
+/**
+ * This function gets all subtasks that are given to the current task and sets the value of the subtaskStatus for each subtask to 0 (undone)
+ * 
+ * @param {Array} subtasks - an array with all the given subtasks for the current task 
+ * @returns {Array} subtaskStatus - an array with a status for each of the subtasks from the current task. The status can be 0 (undone) or 1 (done). Be default/creation of a task, it`s always 0
+ */
+function getTheSubtaskStatus(subtasks){
+    let subtaskStatus = [];
+    for (let index = 0; index &lt; subtasks.length; index++) {
+        const element = subtasks[index];
+        subtaskStatus.push(0); 
+    }
+    return subtaskStatus;
+}
+
+/**
+ * This function is used to determine and returning the Category of the current Task, choosen by the user in taskCreation. 
+ * 
+ * @returns {number} selectedCategory - this number can be either 0(no category), 1(technical task) or 2(user story)
+ */
+function getTheCategoryOfTask(){
+    let selection = document.getElementsByClassName('selector dropdown-img');
+    let selectedCategory = selection[0].options.selectedIndex;
+    return selectedCategory
+}
+
+/**
+ * This function is used to return all the Text of each Subtask an push them into an array, which can be used to post the task
+ * 
+ * @returns {Array} subtasksAsText - an array with the values of each subtask that were given to the task by the user in the task creation
+ */
+function getTheSubtasksOfTask(){
+    let listOfSubtasks = document.getElementsByClassName('content-of-subtask');
+    let subtasksAsText = [];
+    for (let index = 0; index &lt; listOfSubtasks.length; index++) {
+        const subtask = listOfSubtasks[index].childNodes[0].innerHTML;
+        subtasksAsText.push(subtask);
+    }
+    return subtasksAsText;
+}
+
+/**
+ * This function is used to return all profile pics of each contact, that is assigned to the current task
+ * 
+ * @returns {Array} listOfContactEmblems - an array with the html-code for each assigned contact´s profile picture
+ */
+function getTheEmblemsOfAssignedContacts(){
+    let listOfCheckedContacts = document.getElementsByClassName('checked');
+    let listOfContactEmblems = [];
+    for (let index = 0; index &lt; listOfCheckedContacts.length; index++) {
+        const emblem = listOfCheckedContacts[index].childNodes[0].firstChild.outerHTML;
+        listOfContactEmblems.push(emblem);
+    }
+    return listOfContactEmblems;
+}
+
+/**
+ * This function returns all names of the assigned Contacts in form of an array
+ * 
+ * @returns {Array} listOfAssignedNames - An array with all Names of the assigned Contacts
+ */
+function fetchAllAssignedContacts(){
+    let listOfCheckedContacts = document.getElementsByClassName('checked');
+    let listOfAssignedNames = [];
+    for (let i = 0; i &lt; listOfCheckedContacts.length; i++) {
+        const contact = listOfCheckedContacts[i].childNodes[0].children[1].innerHTML;
+        listOfAssignedNames.push(contact);
+    }
+    return listOfAssignedNames;
+}
+
+/**
+ * This eventlistener is triggered when the complete contect has loaded and executes the function addEventListenerToInput
+ */
+document.addEventListener('DOMContentLoaded', addEventListenerToInput);
+
+/**
+ * This eventlistener is triggered when the complete content has loaded and adds the function the the subtask-inputfield, that recognizes the press of the enter-key and then executes the function addToSubtasks
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    let subtaskInputField = document.getElementById('subtask-input');
+    subtaskInputField.addEventListener('keydown', function(event){
+        if(event.key === 'Enter'){
+            event.preventDefault();
+            addToSubtasks();
+        }
+    })
+});
+
+/**
+ * This eventlistener enables clicking on the assign-contacts-field and then shows the assignable contacts. It also hides them, when the user clicks somewhere except the assign-contacts-field
+ * 
+ */
+document.addEventListener('click', function(event){
+    let optionContainer = document.getElementById('optionContainer');
+    if(!optionContainer.contains(event.target) &amp;&amp; event.target != document.getElementById('contact-selector')){
+        let button = document.getElementById('dropdown-btn');
+        hideContactsToAssign(button);
+    }else{
+        renderAssignSelector();
+        showContactsToAssign();
+    }
+})
+
+/**
+ * This function is used to reset the Values of all form-elements 
+ */
+function clearTheForm(){
+    document.getElementById('list-of-subtasks').innerHTML=``; 
+    setTimeout(() => {
+         document.getElementById('addTaskForm').reset();
+    }, 20);
+    changeToActive('medium-btn');
+    let options = document.getElementsByClassName('checked');
+    for (let index = 0; index &lt; options.length;) {
+        const element = options[index];
+        let value = getTheValueForFunction(element);
+        assignTheContact(element,value);
+    }
+    document.getElementById('assignedContactPics').innerHTML = ``;
+}
+
+/**
+ * This function is used to return the number of the given elements id, so it can be toggled by executing the assignTheContact-function.
+ * 
+ * @param {HTMLElement} element - this parameter is a html element of the html collection from elements with the class checked
+ * @returns {number} newValue - the number of the elements id
+ */
+function getTheValueForFunction(element){
+let id = element.id;
+let newValue = parseInt(id.charAt(id.length - 1), 10);
+return newValue;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#OverlayTaskPopup">OverlayTaskPopup</a></li><li><a href="global.html#addBlurListener">addBlurListener</a></li><li><a href="global.html#addEditTaskToFirebase">addEditTaskToFirebase</a></li><li><a href="global.html#addEventListenerToInput">addEventListenerToInput</a></li><li><a href="global.html#addToSubtasks">addToSubtasks</a></li><li><a href="global.html#addTranslate">addTranslate</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#amountSubTasks">amountSubTasks</a></li><li><a href="global.html#assignPicturesToDiv">assignPicturesToDiv</a></li><li><a href="global.html#assignTheContact">assignTheContact</a></li><li><a href="global.html#blendItOut">blendItOut</a></li><li><a href="global.html#calcProgressBar">calcProgressBar</a></li><li><a href="global.html#cancelSubtask">cancelSubtask</a></li><li><a href="global.html#changeButtons">changeButtons</a></li><li><a href="global.html#changeInputFieldImg">changeInputFieldImg</a></li><li><a href="global.html#changeToActive">changeToActive</a></li><li><a href="global.html#changeToClicked">changeToClicked</a></li><li><a href="global.html#checkIfContactWasCreated">checkIfContactWasCreated</a></li><li><a href="global.html#checkIfDesktop">checkIfDesktop</a></li><li><a href="global.html#checkIfLoadContactIsNeeded">checkIfLoadContactIsNeeded</a></li><li><a href="global.html#checkInputFieldValue">checkInputFieldValue</a></li><li><a href="global.html#choosenContacts">choosenContacts</a></li><li><a href="global.html#cleanArrays">cleanArrays</a></li><li><a href="global.html#clearInputField">clearInputField</a></li><li><a href="global.html#clearTheForm">clearTheForm</a></li><li><a href="global.html#clickButtonSearch">clickButtonSearch</a></li><li><a href="global.html#closeMoveTask">closeMoveTask</a></li><li><a href="global.html#closeOverlay">closeOverlay</a></li><li><a href="global.html#closeOverlaySideClick">closeOverlaySideClick</a></li><li><a href="global.html#compareMails">compareMails</a></li><li><a href="global.html#comparePasswords">comparePasswords</a></li><li><a href="global.html#confirmContactCreation">confirmContactCreation</a></li><li><a href="global.html#confirmEditedSubtask">confirmEditedSubtask</a></li><li><a href="global.html#createContactEdit">createContactEdit</a></li><li><a href="global.html#createDivs">createDivs</a></li><li><a href="global.html#createName">createName</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteElementById">deleteElementById</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#descriptionChar">descriptionChar</a></li><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#drawContactDetailPic">drawContactDetailPic</a></li><li><a href="global.html#drawContactEditPic">drawContactEditPic</a></li><li><a href="global.html#drawContactEditPicDesktop">drawContactEditPicDesktop</a></li><li><a href="global.html#dropAt">dropAt</a></li><li><a href="global.html#editAddSub">editAddSub</a></li><li><a href="global.html#editDeleteSub">editDeleteSub</a></li><li><a href="global.html#editEditSub">editEditSub</a></li><li><a href="global.html#editRenderPriority">editRenderPriority</a></li><li><a href="global.html#editRenderSubtask">editRenderSubtask</a></li><li><a href="global.html#editSelectPriority">editSelectPriority</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTaskOverlay">editTaskOverlay</a></li><li><a href="global.html#emblemSvg">emblemSvg</a></li><li><a href="global.html#emptyEditSub">emptyEditSub</a></li><li><a href="global.html#emptyEditTask">emptyEditTask</a></li><li><a href="global.html#fetchAllAssignedContacts">fetchAllAssignedContacts</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#fetchTheData">fetchTheData</a></li><li><a href="global.html#fillEditContactForm">fillEditContactForm</a></li><li><a href="global.html#fillEditContactFormDesktop">fillEditContactFormDesktop</a></li><li><a href="global.html#filterAssignedContacts">filterAssignedContacts</a></li><li><a href="global.html#filterContactsEdit">filterContactsEdit</a></li><li><a href="global.html#filteredContacts">filteredContacts</a></li><li><a href="global.html#findTask">findTask</a></li><li><a href="global.html#formatTask">formatTask</a></li><li><a href="global.html#formatTasks">formatTasks</a></li><li><a href="global.html#generateHTMLcodeForContacts">generateHTMLcodeForContacts</a></li><li><a href="global.html#getAColor">getAColor</a></li><li><a href="global.html#getDataForPostContact">getDataForPostContact</a></li><li><a href="global.html#getDataForProfile">getDataForProfile</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getDescription">getDescription</a></li><li><a href="global.html#getId">getId</a></li><li><a href="global.html#getInitialLetters">getInitialLetters</a></li><li><a href="global.html#getInitialLettersFromInput">getInitialLettersFromInput</a></li><li><a href="global.html#getMail">getMail</a></li><li><a href="global.html#getPhoneNumber">getPhoneNumber</a></li><li><a href="global.html#getSideMenuCharacters">getSideMenuCharacters</a></li><li><a href="global.html#getSignedUpMail">getSignedUpMail</a></li><li><a href="global.html#getSignedUpPssword">getSignedUpPssword</a></li><li><a href="global.html#getTheCategoryOfTask">getTheCategoryOfTask</a></li><li><a href="global.html#getTheCurrentDate">getTheCurrentDate</a></li><li><a href="global.html#getTheDataForPostTask">getTheDataForPostTask</a></li><li><a href="global.html#getTheEditedData">getTheEditedData</a></li><li><a href="global.html#getTheEmblemsOfAssignedContacts">getTheEmblemsOfAssignedContacts</a></li><li><a href="global.html#getTheIdOfTask">getTheIdOfTask</a></li><li><a href="global.html#getTheInformation">getTheInformation</a></li><li><a href="global.html#getTheNewName">getTheNewName</a></li><li><a href="global.html#getTheReadyData">getTheReadyData</a></li><li><a href="global.html#getTheSubtaskStatus">getTheSubtaskStatus</a></li><li><a href="global.html#getTheSubtasksOfTask">getTheSubtasksOfTask</a></li><li><a href="global.html#getTheValueForFunction">getTheValueForFunction</a></li><li><a href="global.html#getTitle">getTitle</a></li><li><a href="global.html#getUserName">getUserName</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#handleError">handleError</a></li><li><a href="global.html#hideContactDetails">hideContactDetails</a></li><li><a href="global.html#hideContactsToAssign">hideContactsToAssign</a></li><li><a href="global.html#hideEditOverlay">hideEditOverlay</a></li><li><a href="global.html#hideOverlay">hideOverlay</a></li><li><a href="global.html#hideTheFormular">hideTheFormular</a></li><li><a href="global.html#hideThisContact">hideThisContact</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#ifContainerEmpty">ifContainerEmpty</a></li><li><a href="global.html#ifOverlay">ifOverlay</a></li><li><a href="global.html#label">label</a></li><li><a href="global.html#landingPageAnimation">landingPageAnimation</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadCurrentContactId">loadCurrentContactId</a></li><li><a href="global.html#loadSingleContact">loadSingleContact</a></li><li><a href="global.html#loadSingleContactDesktop">loadSingleContactDesktop</a></li><li><a href="global.html#moveCategoryTask">moveCategoryTask</a></li><li><a href="global.html#onSubtaskBlur">onSubtaskBlur</a></li><li><a href="global.html#overlayContactsRead">overlayContactsRead</a></li><li><a href="global.html#overlayDeleteTask">overlayDeleteTask</a></li><li><a href="global.html#overlayLabelCheck">overlayLabelCheck</a></li><li><a href="global.html#overlayPrio">overlayPrio</a></li><li><a href="global.html#overlayRender">overlayRender</a></li><li><a href="global.html#overlaySubtaskCheck">overlaySubtaskCheck</a></li><li><a href="global.html#overlayTask">overlayTask</a></li><li><a href="global.html#priorityEmblem">priorityEmblem</a></li><li><a href="global.html#processContacts">processContacts</a></li><li><a href="global.html#readInTasks">readInTasks</a></li><li><a href="global.html#readTheTokens">readTheTokens</a></li><li><a href="global.html#refreshContactToLoad">refreshContactToLoad</a></li><li><a href="global.html#removeHighlight">removeHighlight</a></li><li><a href="global.html#removeShadow">removeShadow</a></li><li><a href="global.html#removeTranslate">removeTranslate</a></li><li><a href="global.html#renderAssignSelector">renderAssignSelector</a></li><li><a href="global.html#renderAwaitFeedback">renderAwaitFeedback</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#renderChoosenContactsEmblems">renderChoosenContactsEmblems</a></li><li><a href="global.html#renderContactListEdit">renderContactListEdit</a></li><li><a href="global.html#renderDone">renderDone</a></li><li><a href="global.html#renderEditDate">renderEditDate</a></li><li><a href="global.html#renderEditTask">renderEditTask</a></li><li><a href="global.html#renderInProgress">renderInProgress</a></li><li><a href="global.html#renderMoveTask">renderMoveTask</a></li><li><a href="global.html#renderToDo">renderToDo</a></li><li><a href="global.html#rewriteButton">rewriteButton</a></li><li><a href="global.html#saveEditsToContact">saveEditsToContact</a></li><li><a href="global.html#selectContact">selectContact</a></li><li><a href="global.html#selectContactIf">selectContactIf</a></li><li><a href="global.html#setDateListener">setDateListener</a></li><li><a href="global.html#setProfile">setProfile</a></li><li><a href="global.html#showAddContact">showAddContact</a></li><li><a href="global.html#showContactDetails">showContactDetails</a></li><li><a href="global.html#showContactsToAssign">showContactsToAssign</a></li><li><a href="global.html#showEditOverlay">showEditOverlay</a></li><li><a href="global.html#showNotification">showNotification</a></li><li><a href="global.html#showPassword">showPassword</a></li><li><a href="global.html#showSearchResults">showSearchResults</a></li><li><a href="global.html#showShadow">showShadow</a></li><li><a href="global.html#showTheNotificaiton">showTheNotificaiton</a></li><li><a href="global.html#showThisContact">showThisContact</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signupSuccessfullAnimation">signupSuccessfullAnimation</a></li><li><a href="global.html#startDragging">startDragging</a></li><li><a href="global.html#startReadingTasks">startReadingTasks</a></li><li><a href="global.html#storeNewData">storeNewData</a></li><li><a href="global.html#subTaskCheck">subTaskCheck</a></li><li><a href="global.html#subTaskNoShow">subTaskNoShow</a></li><li><a href="global.html#submitForm">submitForm</a></li><li><a href="global.html#successfullSignUp">successfullSignUp</a></li><li><a href="global.html#switchToAddTask">switchToAddTask</a></li><li><a href="global.html#taskContainer">taskContainer</a></li><li><a href="global.html#testForChoosenContact">testForChoosenContact</a></li><li><a href="global.html#toggleCheckboxValue">toggleCheckboxValue</a></li><li><a href="global.html#toggleSubstaskRender">toggleSubstaskRender</a></li><li><a href="global.html#updateTaskBoard">updateTaskBoard</a></li><li><a href="global.html#uploadData">uploadData</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Jul 12 2024 15:21:56 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

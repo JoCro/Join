@@ -1,0 +1,165 @@
+@media (min-width: 355px) {
+    .sign-up-p {
+        margin-right: 35px;
+    }
+}
+
+@media (min-width: 800px) {
+
+    .required-msg-div {
+        margin-left: 0;
+        justify-content: center;
+        display: flex;
+    }
+
+    .incorrect-msg-div {
+        margin-left: 0;
+        justify-content: center;
+        display: flex;
+    }
+
+    .incorrect-msg {
+        width: 505px;
+    }
+    
+    .required-msg {
+        width: 505px;
+    }
+
+    .login-card-div {
+        height: 100%;
+        align-items: center;
+    }
+
+    .login-card {
+        width: 652px;
+        max-width: unset;
+        margin-bottom: unset;
+    }
+
+    .login-underline {
+        margin-top: 16px;
+        border-bottom: 3px solid rgba(41, 171, 226, 1);
+        height: 1px;
+        width: 150px;
+    }
+
+    h1 {
+        font-size: 61px;
+        font-weight: 700;
+        line-height: 73.2px;
+    }
+
+    .login-btns-div {
+        width: 100%;
+        height:48px;
+        flex-direction: unset;
+        gap: 35px;
+        margin-bottom: 48px;
+    }
+
+    .login-input-divs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .login-input-div-indexhtml {
+        margin-left: unset;
+        margin-right: unset;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-input-indexhtml {
+        width: 422px;
+    }
+
+    .remember-me-div {
+        margin-left: 120px;
+    }
+
+    .footer-indexhtml {
+        position: fixed;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+    }
+
+    .sign-up-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: unset;
+        position: fixed;
+        top: 67px;
+        right: 122px;
+    }
+
+    .login-body {
+        width: unset;
+        margin-top: unset;
+        margin-bottom: unset;
+        margin-left: unset;
+        margin-right: unset;
+        height: 100vh;
+    }
+
+    #loginParentDiv {
+        margin-top: unset;
+        width: 100%;
+        height: 100%;
+    }
+
+    #logInHeaderLogo {
+        display: none;
+    }
+
+    #logInHeaderLogoBig {
+        display: unset;
+    }
+
+    #signupParentDiv {
+        margin-top: unset;
+        height: 100%;
+        width: 100%;
+        transition: all;
+    }
+
+    .signup-btns-div {
+        margin-bottom: 48px;
+    }
+
+    .join-logo-big {
+        display: unset;
+    }
+
+    .join-logo {
+        display: none;
+    }
+
+    .login-btn {
+        width: 110px;
+    }
+
+    @keyframes loading {
+        from {
+          top: 50%;
+          left: 50%;
+          height: 172.94px;
+          width: 141.03px;
+          filter: brightness(0) invert(1);
+        }
+      
+        to {
+          top: 80px;
+          left: 77px;
+          width: 100.03px;
+          height: 121.97px;
+          filter: brightness(1) invert(0);
+        }
+    }
+}

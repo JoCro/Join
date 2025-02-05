@@ -1,0 +1,326 @@
+.summary-title-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.summary-underline-blue {
+    width: 90px;
+    height: 3px;
+    margin-top: 8px;
+}
+
+.summary-body {
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background-color: rgb(246,247,248);
+}
+
+.summary-container {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary-container-part {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 110px;
+    width: 100%;
+    max-width: 186px;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    transition: all 225ms ease;
+}
+
+.todo-container:hover {
+    background-color: rgb(42,54,71);
+    color: white;
+    box-shadow: 0 0 0 8px rgb(42, 54, 71);
+
+    .edit-and-check-icon-hover {
+        opacity: 1;
+        width: 40px;
+        height: 40px;
+        transition: all 225ms ease;
+    }
+
+    .edit-and-check-icon {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        transition: all 225ms ease;
+    }
+}
+
+.edit-and-check-icon {
+    opacity: 1;
+    width: 40px;
+    height: 40px;
+    transition: all 225ms ease;
+}
+
+.edit-and-check-icon-hover {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transition: all 225ms ease;
+}
+
+.urgent-task-container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 110px;
+    width: 100%;
+    max-width: 396px;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    margin-top: 30px;
+    margin-bottom: 18px;
+    transition: all 225ms ease;
+}
+
+.urgent-task-container:hover {
+    background-color: rgb(42,54,71);
+    color: white;
+    box-shadow: 0 0 0 8px rgb(42, 54, 71);
+}
+
+.urgent-task-counter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 18px;
+    gap: 18px;
+}
+
+.urgent-task-deadline {
+    font-size: 16px;
+    line-height: 19.2px;
+    text-align: left;
+}
+
+#upcomingDeadline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tasks-in-board-container {
+    height: 116px;
+    width: 100%;
+    max-width: 116px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 225ms ease;
+}
+
+.tasks-in-board-container:hover {
+    background-color: rgb(42,54,71);
+    color: white;
+    box-shadow: 0 0 0 8px rgb(42, 54, 71);
+}
+
+.summary-task-numbers {
+    display: flex;
+    width: 100%;
+    font-size: 47px;
+    font-weight: 600;
+    line-height: 56.4px;
+    justify-content: center;
+}
+
+.summary-underline-blue-desktop {
+    display: none;
+    height: 59px;
+    width: 3px;
+}
+
+.summary-icons {
+    width: 40px;
+}
+
+.greetingMsgAnimation {
+    z-index: 11;
+    animation: loading 3s linear;
+    position: fixed;
+    background-color: rgb(246, 247, 248);
+    top: 90px;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    text-align: center;
+}
+
+#greetingName {
+    text-align: center;
+    color: rgb(41,171,226);
+}
+
+@keyframes loading {
+    0% {
+        opacity: 1; 
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 0; 
+    }
+    
+    100% {
+        opacity: 0;
+        display: none; 
+    }
+}
+
+@media (max-width: 396px) {
+    .summary-container-part {
+        gap: 8px;
+    }
+
+    .urgent-task-counter-container {
+        padding-right: 0px !important;
+        padding-left: 18px;
+    }
+}
+
+@media (min-width: 800px) {
+    .greetingMsgAnimation {
+        display: none;
+    }
+
+    .summary-body {
+        margin-left: 328px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    .summary-container {
+        align-items: flex-start;
+        margin-right: 16px;
+        width: calc(100vw - 344px);
+        max-width: 570px;
+    }
+
+    .summary-container-part {
+        justify-content:  flex-start;
+        width: 100%;
+        max-width: unset;
+        gap: 30px;
+    }
+
+    .urgent-task-container {
+        width: 100%;
+        max-width: 560px;
+        height: 168px;
+        gap: 40px;
+    }
+
+    .todo-container {
+        height: 168px;
+        width: 264px;
+        max-width: unset;
+    }
+
+    .tasks-in-board-container {
+        height: 168px;
+        width: 168px;
+        max-width: unset;
+    }
+
+    .summary-subtitle {
+        font-size: 27px;
+        font-weight: 400;
+        line-height: 32.4px;
+    }
+
+    .edit-and-check-icon {
+        opacity: 1;
+        width: 69px;
+        height: 69px;
+        transition: all 225ms ease;
+    }
+
+    .todo-container:hover {
+        .edit-and-check-icon-hover {
+            opacity: 1;
+            width: 69px;
+            height: 69px;
+            transition: all 225ms ease;
+        }
+    }
+
+    .summary-task-numbers {
+        font-size: 64px;
+        line-height: 76.8px;
+    }
+
+    .todo-container {
+        gap: 16px;
+    }
+
+    .summary-sub-text {
+        font-size: 20px;
+    }
+
+    .summary-icons {
+        width: 69px;
+    }
+
+    .urgent-task-deadline-text {
+        font-size: 20px;
+    }
+
+    #upcomingDeadline {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .summary-title-div {
+        flex-direction: unset;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .summary-underline-blue {
+        display: none;
+    }
+
+    .summary-underline-blue-desktop {
+        display: flex;
+        align-items: center;
+    }
+}

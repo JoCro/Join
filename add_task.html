@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <title>Add task</title>
+    <script src="/script.js"></script>
+    <script src="/assets/js/add_task.js"></script>
+    <script src="/assets/js/add_task2.js"></script>
+    <script src="/assets/js/w3_include.js"></script>
+    <script src="/assets/js/contacts.js"></script>
+    <script src="/assets/js/remoteStorage.js"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/svg/join-logo.svg">
+
+    <link rel="stylesheet" href="/assets/css/add_task.css">
+    <link rel="stylesheet" href="/assets/css/add_task_formular.css">
+   
+</head>
+<body onload="init(), loadContacts('contacts'), changeToActive('medium-btn')">
+    <div id="mobileTamplateContent" w3-include-html="/assets/templates/mobile_template.html"></div>
+    <div class="all-content-div">
+        <div class="headline"><p class="headline-text">Add Task</p></div>
+    <div class="content-container">
+        <form id="addTaskForm" onsubmit="getTheDataForPostTask(event, `0`)">
+           <div class="leftDiv">
+            <div class="titleDiv">
+              <div class="subheadlineDiv"><p class="subheadline">Title <p class="marker">*</p></p></div>  
+                <input id="title-input" type="text" required placeholder="Enter a title">
+                <p class="alert-text none">This field is required</p>
+            </div>
+
+            <div class="descriptionDiv">
+                <p class="subheadline">Description</p>
+                <textarea id="descriptionInput" type="text" placeholder="Enter a Description"></textarea>
+            </div>
+
+            <div class="assignedDiv">
+                <p class="subheadline">Assigned to</p>
+                <div class="select-wrapper"><input placeholder="Select contacts to assign" type="text" onclick="renderAssignSelector(), showContactsToAssign()" id="contact-selector" class="selector"></input> 
+                
+                  <button id="dropdown-btn" type="button" onclick="hideContactsToAssign(this)" class="dropdown-btn"></button>
+                </div>
+                     
+            
+          
+                <div id="optionContainer" class="optionContainer none"></div>
+                <div id="assignedContactPics" class="assignedContactPics"></div>
+            </div>
+        </div>
+
+        <div class="addTaskDivider"></div>
+        <div class="rightDiv">
+            <div class="dateDiv">
+                <div class="subheadlineDiv"><p class="subheadline">Due date <p class="marker">*</p></p></div>
+                    <input id="datePicker" type="date" required>
+                    <p class="alert-text none">This field is required</p>
+            </div>
+
+            <div class="prioDiv">
+                <p class="subheadline">Prio</p>
+                <div class="buttonDiv">
+                    <button type="button" id="urgent-btn" class="urgent-btn" onclick="changeToActive('urgent-btn')"><p class="prioLabel">Urgent</p></button>
+                    <button type="button" id="medium-btn" class="medium-btn" onclick="changeToActive('medium-btn')"><p class="prioLabel">Medium</p></button>
+                    <button type="button" id="low-btn" class="low-btn" onclick="changeToActive('low-btn')"><p class="prioLabel">Low</p></button>
+                </div>
+            </div>
+
+            <div class="category-div">
+               <div class="subheadlineDiv"><p class="subheadline">Category <p class="marker">*</p></p></div> 
+                <select class="selector dropdown-img" required>
+                        <option value="">Select task category</option>
+                        <option value="2">Technical Task</option>
+                        <option value="3">User Story</option>
+                </select>
+            </div>
+
+            <div class="subtask-div">
+                <p class="subheadline">Subtasks</p>
+                <div id="subtask-wrapper" class="subtask-wrapper">
+                    <input onclick="changeButtons()" id="subtask-input" type="text" placeholder="Add new subtask">
+                    <div id="subtask-buttons" class="subtask-btn-div none">
+                       <button type="button" onclick="cancelSubtask()" class="cancel-btn"></button> 
+                       <div class="btn-divider"></div>
+                       <button type="button" onclick="addToSubtasks()" class="correct-btn"></button>   
+                    </div>
+                    <div id="subtask-plus-button-div" class="subtask-plus-btn-div">
+                        <button type="button" class="plus-btn"></button>
+                    </div>
+                    
+                </div>
+                <div class="subtask-div">
+                    <ul id="list-of-subtasks"> 
+                    </ul>
+                   
+                </div>
+            </div>
+
+            <div class="createDiv">
+                <div class="explanation-div"><p class="marker">*<p class="explanation">This field is required</p></p></div>
+                <div class="addTaskCtrlButtons">
+                    <button type="button" onclick="clearTheForm()" class="cancelTaskBtn">Clear</button>
+                    <button type="submit" class="create-btn">Create Task</button>
+                </div>
+                
+            </div>
+
+            </div>
+        </form>
+        
+        
+       
+    </div>
+</div>
+    <div class="notificationDiv none" id="taskAddedNotification"><img class="addedToBoardNotification" src="/assets/svg/Added to board.svg"></div>
+
+    <script>
+        function getTheCurrentDate(){
+            let today = new Date();
+            let day = String(today.getDate()).padStart(2, '0');
+            let month = String(today.getMonth() + 1).padStart(2, '0')
+            let year = today.getFullYear();
+
+            return year + '-' + month + '-' + day;
+        }
+
+        document.getElementById('datePicker').setAttribute('min', getTheCurrentDate());
+    </script>
+</body>
+</html>
