@@ -1,7 +1,7 @@
 // Board render Tasks container /////////////////
 
-let toDoTask = []
-let newLabel;   
+let toDoTask = [];
+let newLabel;
 let newSumSubtask;
 let newAmountSubtask;
 let newSumSubtaskCalc;
@@ -14,162 +14,174 @@ let taskToMove;
 
 /**
  * This function reads in the downloaded Tasks and sorts them due to their type.
- * Afterwards the relative function gets started. 
- * 
+ * Afterwards the relative function gets started.
+ *
  */
-function startReadingTasks(){
-    for(x=0; x<TaskBoard.length; x++){
-        const toDoCard = TaskBoard[x];              
-        toDoTask = toDoCard;
-            subTaskCheck();
-            readInTasks();
-        if (toDoCard.type === 0 || toDoCard.type === "0"){
-            renderToDo();       }
-        if (toDoCard.type === 1 || toDoCard.type === "1"){
-            renderInProgress();    }
-        if (toDoCard.type === 2 || toDoCard.type === "2"){            
-            renderAwaitFeedback();  }
-        if (toDoCard.type === 3 || toDoCard.type === "3"){            
-            renderDone();   }  }
+function startReadingTasks() {
+  for (x = 0; x < TaskBoard.length; x++) {
+    const toDoCard = TaskBoard[x];
+    toDoTask = toDoCard;
+    subTaskCheck();
+    readInTasks();
+    if (toDoCard.type === 0 || toDoCard.type === "0") {
+      renderToDo();
+    }
+    if (toDoCard.type === 1 || toDoCard.type === "1") {
+      renderInProgress();
+    }
+    if (toDoCard.type === 2 || toDoCard.type === "2") {
+      renderAwaitFeedback();
+    }
+    if (toDoCard.type === 3 || toDoCard.type === "3") {
+      renderDone();
+    }
+  }
 }
 
 /**
  * This function this function checks if the current read in task has subtasks.
- * 
+ *
  */
-function subTaskCheck(){ 
-    subTaskChecked = 0;  
-    if(toDoTask.subtaskSum){
-    if (toDoTask.subtaskSum.length > 0){
-    subTaskChecked = 1; 
+function subTaskCheck() {
+  subTaskChecked = 0;
+  if (toDoTask.subtaskSum) {
+    if (toDoTask.subtaskSum.length > 0) {
+      subTaskChecked = 1;
     } else {
-        subTaskChecked = 0;
-    }    
+      subTaskChecked = 0;
     }
+  }
 }
 
 /**
  * This function sets the subtask section to invisible if no subtask is contained at the current task.
- * Afterwards the relative function gets started. 
- * 
+ * Afterwards the relative function gets started.
+ *
  */
-function subTaskNoShow(){
-    if (subTaskChecked === 0){       
-       let idSubtask = 'cardSubtasks' + toDoTask.taskid;
-       document.getElementById(idSubtask).classList.add('hidden');
-    } 
+function subTaskNoShow() {
+  if (subTaskChecked === 0) {
+    let idSubtask = "cardSubtasks" + toDoTask.taskid;
+    document.getElementById(idSubtask).classList.add("hidden");
+  }
 }
 
 /**
  * This function starts the process of the creating & calculating of the current task.
- * 
+ *
  */
-function readInTasks(){         
-    label(toDoTask); 
-    amountSubTasks();
-    calcProgressBar();
-    descriptionChar();   
-    emblemSvg();  
-    priorityEmblem();
+function readInTasks() {
+  label(toDoTask);
+  amountSubTasks();
+  calcProgressBar();
+  descriptionChar();
+  emblemSvg();
+  priorityEmblem();
 }
 
 /**
  * This function sets the kind of label for the current task.
- * 
+ *
  */
-function label(){     
-    if(toDoTask.label === 1){
-        newLabel = technicalTaskLabel;
-    } else {
-        newLabel = userStoryLabel;
-    }                 
+function label() {
+  if (toDoTask.label === 1) {
+    newLabel = technicalTaskLabel;
+  } else {
+    newLabel = userStoryLabel;
+  }
 }
 
 /**
  * This function reads out the subtasks of the current task.
- * 
+ *
  */
-function amountSubTasks(){     
-    newAmountSubtask = toDoTask.subtask.length;
+function amountSubTasks() {
+  newAmountSubtask = toDoTask.subtask.length;
+  newSumSubtask = 0;
+  if (subTaskChecked === 1) {
+    for (i = 0; i < newAmountSubtask; i++) {
+      newSumSubtask += toDoTask.subtaskSum[i]; //
+    }
+  }
+  if (subTaskChecked === 0) {
     newSumSubtask = 0;
-    if(subTaskChecked === 1){
-    for (i=0;i<newAmountSubtask;i++){
-        newSumSubtask += toDoTask.subtaskSum[i]; //
-    }
-    }
-    if(subTaskChecked === 0){
-        newSumSubtask = 0; newAmountSubtask = 0;
-    } 
+    newAmountSubtask = 0;
+  }
 }
 
 /**
  * This function pre-calcualtes the size of the progress bar of the current task.
- * 
+ *
  */
-function calcProgressBar(){  
-    newSumSubtaskCalc = 0;     
-    newSumSubtaskCalc = newSumSubtask/newAmountSubtask;      
-    if (subTaskChecked === 1){
-    newProgressInPercent = newSumSubtaskCalc * 100;}
-    if (subTaskChecked === 0){
-    newProgressInPercent = 0; 
-    }
-    newProgressBarId = toDoTask.taskid; 
+function calcProgressBar() {
+  newSumSubtaskCalc = 0;
+  newSumSubtaskCalc = newSumSubtask / newAmountSubtask;
+  if (subTaskChecked === 1) {
+    newProgressInPercent = newSumSubtaskCalc * 100;
+  }
+  if (subTaskChecked === 0) {
+    newProgressInPercent = 0;
+  }
+  newProgressBarId = toDoTask.taskid;
 }
 
 /**
  * This function reads in the description of the current task.
- * 
+ *
  */
-function descriptionChar(){
-    let lastChar = toDoTask.description[toDoTask.description.length - 1];
-    if (lastChar === "." || lastChar === "!" || lastChar === "?"){
-        toDoTask.description = toDoTask.description.slice(0, -1);
-    }                                 
+function descriptionChar() {
+  let lastChar = toDoTask.description[toDoTask.description.length - 1];
+  if (lastChar === "." || lastChar === "!" || lastChar === "?") {
+    toDoTask.description = toDoTask.description.slice(0, -1);
+  }
 }
 
 /**
  * This function reads in the emblems of the current task.
- * 
+ *
  */
-function emblemSvg() {            
-    newEmblems = '';  
-        if (toDoTask.contactEmblem.length > 0){                        
-        for (let i = 0; i < toDoTask.contactEmblem.length; i++){
-            const svg = toDoTask.contactEmblem[i];
-            newEmblems += `<div class="card-contact-emblems-icon">${svg}</div>`;
-            if (i === 3){
-                if(toDoTask.contactEmblem.length > 3){
-                    let otherEmblems = toDoTask.contactEmblem.length - 4;
-                    if (otherEmblems === 0){break;}
-                    newEmblems+= `<div class="card-contact-emblems-others" style="font-weight: bold; font-size: 16px;">+${otherEmblems}</div>`
-                }                
-                break;}
-        } }          
+function emblemSvg() {
+  newEmblems = "";
+  if (toDoTask.contactEmblem.length > 0) {
+    for (let i = 0; i < toDoTask.contactEmblem.length; i++) {
+      const svg = toDoTask.contactEmblem[i];
+      newEmblems += `<div class="card-contact-emblems-icon">${svg}</div>`;
+      if (i === 3) {
+        if (toDoTask.contactEmblem.length > 3) {
+          let otherEmblems = toDoTask.contactEmblem.length - 4;
+          if (otherEmblems === 0) {
+            break;
+          }
+          newEmblems += `<div class="card-contact-emblems-others" style="font-weight: bold; font-size: 16px;">+${otherEmblems}</div>`;
+        }
+        break;
+      }
+    }
+  }
 }
 
 /**
  * This function reads in and sets the priority of the current task.
- * 
+ *
  */
-function priorityEmblem(){
-    newPriority = '';
-            if (toDoTask.priority){
-            if (toDoTask.priority === "low"){
-                newPriority = "/assets/svg/capa_priority_low.svg";
-            }    else if (toDoTask.priority === "medium"){
-                newPriority = "/assets/svg/capa_1_medium_priority.svg";
-            }   else if(toDoTask.priority === "urgent") {
-                newPriority = "/assets/svg/Capa_2_Burger menue_Arrow_up.svg"}
-            }
+function priorityEmblem() {
+  newPriority = "";
+  if (toDoTask.priority) {
+    if (toDoTask.priority === "low") {
+      newPriority = "/assets/svg/capa_priority_low.svg";
+    } else if (toDoTask.priority === "medium") {
+      newPriority = "/assets/svg/capa_1_medium_priority.svg";
+    } else if (toDoTask.priority === "urgent") {
+      newPriority = "/assets/svg/Capa_2_Burger menue_Arrow_up.svg";
+    }
+  }
 }
 
 /**
  * This function creates the tasks of the to do section.
- * 
+ *
  */
-function renderToDo(){
-    toDo.innerHTML += `
+function renderToDo() {
+  toDo.innerHTML += `
     <div id="Task${toDoTask.taskid}" class="card-body" onclick="overlayTask(${toDoTask.taskid})" ondragstart="startDragging(${toDoTask.taskid})" draggable="true">
     <div id="cardHeader" class="card-header">${newLabel}<div><img onclick="renderMoveTask(event, ${x})" class="edit-task-category-svg" src="/assets/svg/arrow-left-line.svg" alt="editCategory"></div></div>
     <div id="cardTitle" class="card-title"><h4>${toDoTask.title}</h4></div>
@@ -183,18 +195,18 @@ function renderToDo(){
     <div class="card-contact-emblems">${newEmblems}</div>
     <div><img src="${newPriority}" alt="priority"></div>
     </div></div>            
-    `           
-    const progressBar = document.getElementById(newProgressBarId);
-    progressBar.setAttribute('width', `${newProgressInPercent}%`);
-    subTaskNoShow();
+    `;
+  const progressBar = document.getElementById(newProgressBarId);
+  progressBar.setAttribute("width", `${newProgressInPercent}%`);
+  subTaskNoShow();
 }
 
 /**
  * This function creates the tasks of the in progress section.
- * 
+ *
  */
-function renderInProgress(){
-    inProgress.innerHTML += `
+function renderInProgress() {
+  inProgress.innerHTML += `
     <div id="Task${toDoTask.taskid}" class="card-body" onclick="overlayTask(${toDoTask.taskid})" ondragstart="startDragging(${toDoTask.taskid})" draggable="true">
     <div id="cardHeader" class="card-header">${newLabel}<img onclick="renderMoveTask(event, ${x})" class="edit-task-category-svg" src="/assets/svg/arrow-left-line.svg" alt="editCategory"></div>
     <div id="cardTitle" class="card-title"><h4>${toDoTask.title}</h4></div>
@@ -208,18 +220,18 @@ function renderInProgress(){
     <div class="card-contact-emblems">${newEmblems}</div>
     <div><img src="${newPriority}" alt="priority"></div>
     </div></div>            
-    `           
-    const progressBar = document.getElementById(newProgressBarId);
-    progressBar.setAttribute('width', `${newProgressInPercent}%`);
-    subTaskNoShow();
+    `;
+  const progressBar = document.getElementById(newProgressBarId);
+  progressBar.setAttribute("width", `${newProgressInPercent}%`);
+  subTaskNoShow();
 }
 
 /**
  * This function creates the tasks of the await feedback section.
- * 
+ *
  */
-function renderAwaitFeedback(){
-    awaitFeedback.innerHTML += `
+function renderAwaitFeedback() {
+  awaitFeedback.innerHTML += `
     <div id="Task${toDoTask.taskid}" class="card-body" onclick="overlayTask(${toDoTask.taskid})" ondragstart="startDragging(${toDoTask.taskid})" draggable="true">
     <div id="cardHeader" class="card-header">${newLabel}<img onclick="renderMoveTask(event, ${x})" class="edit-task-category-svg" src="/assets/svg/arrow-left-line.svg" alt="editCategory"></div>
     <div id="cardTitle" class="card-title"><h4>${toDoTask.title}</h4></div>
@@ -233,18 +245,18 @@ function renderAwaitFeedback(){
     <div class="card-contact-emblems">${newEmblems}</div>
     <div><img src="${newPriority}" alt="priority"></div>
     </div></div>            
-    `           
-    const progressBar = document.getElementById(newProgressBarId);
-    progressBar.setAttribute('width', `${newProgressInPercent}%`);
-    subTaskNoShow();
+    `;
+  const progressBar = document.getElementById(newProgressBarId);
+  progressBar.setAttribute("width", `${newProgressInPercent}%`);
+  subTaskNoShow();
 }
 
 /**
  * This function creates the tasks of the done section.
- * 
+ *
  */
-function renderDone(){
-    done.innerHTML += `
+function renderDone() {
+  done.innerHTML += `
     <div id="Task${toDoTask.taskid}" class="card-body" onclick="overlayTask(${toDoTask.taskid})" ondragstart="startDragging(${toDoTask.taskid})" draggable="true">
     <div id="cardHeader" class="card-header">${newLabel}<img onclick="renderMoveTask(event, ${x})" class="edit-task-category-svg" src="/assets/svg/arrow-left-line.svg" alt="editCategory"></div>
     <div id="cardTitle" class="card-title"><h4>${toDoTask.title}</h4></div>
@@ -258,50 +270,50 @@ function renderDone(){
     <div class="card-contact-emblems">${newEmblems}</div>
     <div><img src="${newPriority}" alt="priority"></div>
     </div></div>            
-    `           
-    const progressBar = document.getElementById(newProgressBarId);
-    progressBar.setAttribute('width', `${newProgressInPercent}%`);
-    subTaskNoShow();
+    `;
+  const progressBar = document.getElementById(newProgressBarId);
+  progressBar.setAttribute("width", `${newProgressInPercent}%`);
+  subTaskNoShow();
 }
 
 /**
  * This function prepares the HTML sections für being filled with tasks.
- * 
+ *
  */
-function taskContainer(){             
-    toDo.innerHTML = '';
-    inProgress.innerHTML = '';
-    awaitFeedback.innerHTML = '';
-    done.innerHTML = '';
-    startReadingTasks();
-    ifContainerEmpty();    
+function taskContainer() {
+  toDo.innerHTML = "";
+  inProgress.innerHTML = "";
+  awaitFeedback.innerHTML = "";
+  done.innerHTML = "";
+  startReadingTasks();
+  ifContainerEmpty();
 }
 
 /**
  * This function sets the placeholder for empty task areas, if needed.
- * 
+ *
  */
-function ifContainerEmpty(){
-    if (toDo.innerHTML == ''){
-        toDo.innerHTML = `<img class="placeholder-container-img" src="/assets/svg/no_task_to_do.png" alt="no-task-to-do">`
-    }
-    if (inProgress.innerHTML == ''){
-        inProgress.innerHTML = `<img class="placeholder-container-img" src="/assets/svg/No_tasks_in_progress.png" alt="no-task-in-progress">`
-    }
-    if (awaitFeedback.innerHTML === '') {
-        awaitFeedback.innerHTML = `<img class="placeholder-container-img" src="/assets/svg/no_tasks_awaiting_feedback.png" class="to-do-container-mobile" alt="no-task-awaits-feedback"></div>`
-    }
-    if (done.innerHTML === '') {
-        done.innerHTML = `<img class="placeholder-container-img" src="/assets/svg/no_tasks_done.png" class="to-do-container-mobile" alt="no-task-done"></div>`
-    }
+function ifContainerEmpty() {
+  if (toDo.innerHTML == "") {
+    toDo.innerHTML = `<div class="placeholder-container-img">No tasks in to do</div>`;
+  }
+  if (inProgress.innerHTML == "") {
+    inProgress.innerHTML = `<div class="placeholder-container-img">No tasks in progress</div>`;
+  }
+  if (awaitFeedback.innerHTML === "") {
+    awaitFeedback.innerHTML = `<div class="placeholder-container-img">No tasks in await feedback</div>`;
+  }
+  if (done.innerHTML === "") {
+    done.innerHTML = `<div class="placeholder-container-img">No tasks in done</div>`;
+  }
 }
 
 /**
  * This function creates the popup task for further task information.
- * 
+ *
  */
-function overlayRender(){
-    overlay.innerHTML = `
+function overlayRender() {
+  overlay.innerHTML = `
     <div id="${OverlayTask.taskid}" class="overlay-container">
     <div id= "overlayBoard" class="overlay-task transition">
     <div id="overlayHeader" class="overlay-card-header">${overlayLabel}<div class="close-overlay" onclick="closeOverlay()"></div></div>
@@ -323,15 +335,15 @@ function overlayRender(){
     </div>
     </div>
     </div>
-    `;        
+    `;
 }
 
 /**
  * This function creates the HTML for the task to edit.
- * 
+ *
  */
-function renderEditTask(){
-    overlay.innerHTML = `
+function renderEditTask() {
+  overlay.innerHTML = `
     <div id="boardEditTask" class="board-edit-task">
     <div class="close-edit"><div onclick="closeOverlay(${taskIdBoard}, ${taskboardPosition})" class ="close-overlay"></div></div>
     <h4 style="font-weight: 400;">Title</h4>
@@ -368,5 +380,5 @@ function renderEditTask(){
     </div>
     <div id="editRenderSubtasks" class="edit-render-subtasks"></div> 
     <div class="edit-ok-button"><button onclick="storeNewData(${taskboardPosition})" class="edit-button">OK</button></div>
-    `
-} 
+    `;
+}
